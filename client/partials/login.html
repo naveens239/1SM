@@ -1,0 +1,65 @@
+<div style="padding:15px;" class="dropdown-menu">
+    <form>
+        <a id="fbLink" class="btn btn-block btn-social btn-facebook" style="color:#fff;background-color:#3b5998;">
+            <i class="fa fa-facebook"></i> Login with Facebook
+        </a>
+        <a id="googleLink" class="btn btn-block btn-social btn-google-plus" style="color:#fff;background-color:#dd4b39;">
+            <i class="fa fa-google-plus"></i> Login with Google
+        </a>
+    </form>
+    <br>
+    <!---Login with phone/email--->
+    <form><a data-target="#formLogin" data-toggle="collapse" href="#"><label>Login with phone/email</label></a></form>
+    <form class="form collapse" id="formLogin" action="/login" method="post">
+        <div class="form-group">
+            <input type="text" required="" title="Enter your phone/email"
+                   placeholder="Phone/Email" id="username"
+                   name="username" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="password" required="" title="Enter your password" placeholder="Password"
+                   id="password" name="password" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn" id="btnLocalLogin" value="Login"/>
+        </div>
+    </form>
+    <!---Sign Up--->
+    <form><a data-target="#formRegister" data-toggle="collapse"
+             title="Fast and free sign up!" href="#"><label>New User? Sign Up...</label></a></form>
+
+    <form class="form collapse" id="formRegister" action="/signup" method="post">
+
+        <div class="form-group">
+            <input type="text" required="" title="Enter your phone/email"
+                   placeholder="Phone/Email" id="username"
+                   name="username" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="password" required="" title="Enter your password" placeholder="Password"
+                   id="password" name="password" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="password" required="" title="Enter your password again" placeholder="Password (again)"
+                   id="password2" name="password2" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn" id="btnLocalSignUp" value="Sign Up"/>
+        </div>
+    </form>
+    <!---Forgot/Change password--->
+    <form><a data-target="#formForgotPassword" data-toggle="collapse"
+             title="Reset you password" href="#"><label>Forgot/Change Password</label></a></form>
+
+    <form class="form collapse" id="formForgotPassword" action="/reset_password" method="post">
+
+        <div class="form-group">
+            <input type="text" required="" title="Enter your email address"
+                   placeholder="Email" id="username"
+                   name="username" value=""/>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn" id="btnForgotPassword" value="Reset Password"/>
+        </div>
+    </form>
+</div>

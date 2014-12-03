@@ -1,0 +1,14 @@
+{
+  "name": "ui_1stopMake",
+  "version": "0.0.1",
+  "description": "UI version : One Stop Make",
+  "private": true,
+  "main": "server/start.min.js",
+  "dependencies": {
+    "express": "^4.10.4",
+    "filewalker": "^0.1.2",
+    "hbs": "^2.7.0",
+    "path": "^0.4.9",
+    "underscore": "^1.7.0"
+  }
+}

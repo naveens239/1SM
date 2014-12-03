@@ -1,0 +1,32 @@
+{{#if featured_vendors}}
+        alert('hiiii');
+<div class="col-md-9">
+    <div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">Featured Vendors</h2>
+    </div>
+    {{#each featured_vendors}}
+        alert('3dobj'+{{obj_profile.3d_obj}});
+    <div class="col-sm-6 col-md-4" class="hover_style">
+        <div class="thumbnail">
+            <canvas id="cv" width=400 height=280> It seems you are using an outdated browser that does not support canvas :-(</canvas>
+            <script type="text/javascript">
+                var viewer = new JSC3D.Viewer(document.getElementById('cv'));
+                viewer.setParameter('SceneUrl',         '/uploads/{{obj_profile.3d_obj}}');
+                viewer.setParameter('ModelColor',       '#CAA618');
+                viewer.setParameter('BackgroundColor1', '#E5D7BA');
+                viewer.setParameter('BackgroundColor2', '#383840');
+                viewer.setParameter('RenderMode',       'flat');
+                viewer.init();
+                viewer.update();
+            </script>
+            <div class="caption">
+                <p>Short Description <br/> Links Description</p>
+                <span>&nbsp;{{obj_profile.obj_name}}</span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+</div>
+{{/if}}
