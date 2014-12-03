@@ -7,7 +7,9 @@
     {{#each featured_vendors}}
     <div class="col-sm-6 col-md-4" class="hover_style">
         <div class="thumbnail">
+            <a href="/featured_vendor/{{user_id}}">
             <canvas id="cv{{@index}}" width=400 height=280> It seems you are using an outdated browser that does not support canvas :-(</canvas>
+            </a>
             <script type="text/javascript">
                 var viewer = new JSC3D.Viewer(document.getElementById('cv{{@index}}'));
                 viewer.setParameter('SceneUrl',         '/uploads/{{obj_profile.3d_obj}}');
