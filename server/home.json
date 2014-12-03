@@ -1,49 +1,49 @@
 {
   "featured_vendors": [
     {
-      "oauth_id": "1",
+      "user_id": "1",
       "obj_profile": {
         "obj_name": "Bunny",
         "3d_obj": "bunny.obj"
       }
     },
     {
-      "oauth_id": "2",
+      "user_id": "2",
       "obj_profile": {
         "obj_name": "Bunny",
         "3d_obj": "ptero.obj"
       }
     },
     {
-      "oauth_id": "3",
+      "user_id": "3",
       "obj_profile": {
         "obj_name": "Bunny",
         "3d_obj": "parasau.obj"
       }
     },
     {
-      "oauth_id": "4",
+      "user_id": "4",
       "obj_profile": {
         "obj_name": "Hotel",
         "3d_obj": "hotel.obj"
       }
     },
     {
-      "oauth_id": "5",
+      "user_id": "5",
       "obj_profile": {
         "obj_name": "Helicopter",
         "3d_obj": "helicopter.obj"
       }
     },
     {
-      "oauth_id": "6",
+      "user_id": "6",
       "obj_profile": {
         "obj_name": "Rhino",
         "3d_obj": "rhino.obj"
       }
     },
     {
-      "oauth_id": "7",
+      "user_id": "7",
       "obj_profile": {
         "obj_name": "Shoe",
         "3d_obj": "shoe.obj"
