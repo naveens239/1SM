@@ -4,49 +4,48 @@
       "user_id": "1",
       "obj_profile": {
         "obj_name": "Bunny",
-        "3d_obj": "bunny.obj"
+        "3d_obj": "bunny.obj",
+        "2d_obj":"bunny.png"
       }
     },
     {
       "user_id": "2",
       "obj_profile": {
         "obj_name": "Ptero",
-        "3d_obj": "ptero.obj"
+        "3d_obj": "ptero.obj",
+        "2d_obj":"ptero.png"
       }
     },
     {
       "user_id": "3",
       "obj_profile": {
         "obj_name": "Parasau",
-        "3d_obj": "parasau.obj"
+        "3d_obj": "parasau.obj",
+        "2d_obj":"parasau.png"
       }
     },
     {
       "user_id": "4",
       "obj_profile": {
-        "obj_name": "Hotel",
-        "3d_obj": "hotel.obj"
+        "obj_name": "Helicopter",
+        "3d_obj": "helicopter.obj",
+        "2d_obj":"helicopter.png"
       }
     },
     {
       "user_id": "5",
       "obj_profile": {
-        "obj_name": "Helicopter",
-        "3d_obj": "helicopter.obj"
+        "obj_name": "Rhino",
+        "3d_obj": "rhino.obj",
+        "2d_obj":"rhino.png"
       }
     },
     {
       "user_id": "6",
       "obj_profile": {
-        "obj_name": "Rhino",
-        "3d_obj": "rhino.obj"
-      }
-    },
-    {
-      "user_id": "7",
-      "obj_profile": {
         "obj_name": "Shoe",
-        "3d_obj": "shoe.obj"
+        "3d_obj": "shoe.obj",
+        "2d_obj":"shoe.png"
       }
     }
   ]
