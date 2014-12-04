@@ -1,9 +1,9 @@
 {
-  "name": "ui_1stopMake",
+  "name": "1stopMake",
   "version": "0.0.1",
-  "description": "UI version : One Stop Make",
+  "description": "One Stop Make",
   "private": true,
-  "main": "server/start.min.js",
+  "main": "server/start_ui_flow.js",
   "dependencies": {
     "express": "^4.10.4",
     "filewalker": "^0.1.2",
