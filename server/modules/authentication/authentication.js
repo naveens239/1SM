@@ -59,7 +59,7 @@ module.exports = {
         router.get('/loginSuccess', function (req, res, next) {
             console.log('in loginSuccess, user:' + JSON.stringify(req.session.passport.user));
             //req.session.passport.user.oauth_id = req.session.passport.user.username;
-            res.redirect("/vendor_profile");
+            res.redirect("/user_profile");
         });
     }
 }
