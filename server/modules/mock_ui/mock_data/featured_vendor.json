@@ -1,37 +1,38 @@
 {
+
   "1": {
-    "obj_profile": {
-      "obj_name": "Bunny",
-      "3d_obj": "bunny.obj",
-      "2d_obj":"bunny.png"
-    }
-  },
-  "2": {
     "obj_profile": {
       "obj_name": "Ptero",
       "3d_obj": "ptero.obj",
       "2d_obj":"ptero.png"
     }
   },
-  "3": {
+  "2": {
     "obj_profile": {
       "obj_name": "Parasau",
       "3d_obj": "parasau.obj",
       "2d_obj":"parasau.png"
     }
   },
-  "4": {
+  "3": {
     "obj_profile": {
       "obj_name": "Helicopter",
       "3d_obj": "helicopter.obj",
       "2d_obj":"helicopter.png"
     }
   },
-  "5": {
+  "4": {
     "obj_profile": {
       "obj_name": "Rhino",
       "3d_obj": "rhino.obj",
       "2d_obj":"rhino.png"
+    }
+  },
+  "5": {
+    "obj_profile": {
+      "obj_name": "Bunny",
+      "3d_obj": "bunny.obj",
+      "2d_obj":"bunny.png"
     }
   },
   "6": {
