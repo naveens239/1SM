@@ -35,6 +35,15 @@ background:#FF0000;
 
   {{>header.html}}
 
+  <!--show errors if any-->
+  {{#if messages.error}}
+  <div class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span class="sr-only">Error:</span>
+    {{messages.error}}
+  </div>
+  {{/if}}
+
   {{>slideshow.html}}
 
 <div class="container" style="margin-top:20px">
@@ -63,11 +72,10 @@ background:#FF0000;
   </div>
 </div>
 
-
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="/js/libs/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="/js/libs/bootstrap.min.js"></script>
+    <script src="js/libs/validate.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="pages/home/home.js"></script>
   </body>
 </html>
