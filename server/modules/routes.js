@@ -41,6 +41,7 @@ function set_from_module(modulepath, page_router, api_router){
             }
         } catch (e) {
             console.error("Route module failed to load:", modulepath);
+            console.error(e);
             //Doesn't matter, go ahead with next directory
         }
     }
