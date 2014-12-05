@@ -93,6 +93,7 @@ function dynamic_render_callback(req, res){
     res.render(page_name + '/' + page_name, data);
 }
 
+//TODO: move to common module
 function read_json_file(json_file, key) {
     var json;
     try {

@@ -97,12 +97,13 @@ function routeConfig() {
     app.use('/', router.page_router);
     app.use('/api', router.api_router);
 
-    //list all routes
+    //activate mock ui so that mock pages with json data and business logic pages would co exist.
     setTimeout(function () {
         var mock_ui_module = require('./modules/mock_ui/mock_ui');
         mock_ui_module.activate(router.page_router);
     }, 100);//delay so that all existing routes would be set before mock routes would be added
 
+    //list all routes in dev
     if (app.get('env') === 'development') {
         setTimeout(function () {
             var routes_module = require('./modules/routes');
