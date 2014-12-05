@@ -11,7 +11,7 @@ var file_walker = require('filewalker'),
     MOCK_DATA_PATH = path.join(__dirname, 'mock_data');
 
 function activate(router){
-    mock_ui_config = read_json_file(path.join(__server_path, 'modules/mock_ui/mock_ui_config.json'));
+    mock_ui_config = read_json_file(path.join(__dirname, 'mock_ui_config.json'));
     console.log('mock ui config:'+JSON.stringify(mock_ui_config));
 
     //ignore already registered routes
