@@ -1,0 +1,229 @@
+<div class="tab-pane fade active in" id="service-one">
+
+<form id="vendor_form" class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>Official Info</legend>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="vendor_name">Vendor Name</label>
+
+    <div class="col-md-4">
+        <input id="vendor_name" name="vendor_name" placeholder="Your Company name"
+               class="form-control input-md" required="" type="text">
+
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="email">Email</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <input id="email" name="email" placeholder="Your email address" class="form-control input-md"
+                   required="" type="text">
+            <span class="input-group-addon  glyphicon glyphicon-envelope"></span>
+        </div>
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="website">Website</label>
+
+    <div class="col-md-4">
+        <input id="website" name="website" placeholder="Your website address" class="form-control input-md"
+               type="text">
+
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="fbpage">Facebook Page</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <input id="fbpage" name="fbpage" placeholder="Your fb page" class="form-control input-md"
+                   type="text">
+            <span class="input-group-addon  btn-facebook"><i class="fa fa-facebook"></i></span>
+        </div>
+
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="youtube">Youtube Link</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <input id="youtube" name="youtube" placeholder="Your youtube link" class="form-control input-md"
+                   type="text">
+            <span class="input-group-addon icon-youtube"><i class="fa fa-youtube"></i></span>
+        </div>
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="twitter">Twitter</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <input id="twitter" name="twitter" placeholder="Your twitter page" class="form-control input-md"
+                   type="text">
+            <span class="input-group-addon  btn-twitter"><i class="fa fa-twitter"></i></span>
+        </div>
+    </div>
+</div>
+
+<!-- Prepended text-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="mobile">Primary Mobile Phone</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon">+91</span>
+            <input id="mobile" name="mobile" class="form-control" placeholder="Your mobile number"
+                   required="" type="text">
+            <span class="input-group-addon  glyphicon glyphicon-phone"></span>
+        </div>
+
+    </div>
+</div>
+
+<!-- Prepended text-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="altphone">Alternate Phone</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon">+91</span>
+            <input id="altphone" name="altphone" class="form-control" placeholder="Secondary phone"
+                   type="text">
+        </div>
+
+    </div>
+</div>
+
+<!-- Prepended text-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="landphone">Landline</label>
+
+    <div class="col-md-4">
+        <div class="input-group">
+            <span class="input-group-addon">+91</span>
+            <input id="landphone" name="landphone" class="form-control" placeholder="Phone with area code"
+                   type="text">
+            <span class="input-group-addon  glyphicon glyphicon-phone-alt"></span>
+        </div>
+
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="addressline1">Address Line 1</label>
+
+    <div class="col-md-4">
+        <input id="addressline1" name="addressline1" placeholder="" class="form-control input-md"
+               required="" type="text">
+
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="addressline2">Address Line 2</label>
+
+    <div class="col-md-4">
+        <input id="addressline2" name="addressline2" placeholder="" class="form-control input-md"
+               type="text">
+
+    </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="state">State/Territory</label>
+
+    <div class="col-md-4">
+        <select id="state" name="state" class="form-control">
+            {{>indian_states.html}}
+        </select>
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="city">City</label>
+
+    <div class="col-md-4">
+        <input id="city" name="city" placeholder="" class="form-control input-md" required="" type="text">
+
+    </div>
+</div>
+
+<!-- Text input-->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="pincode">Pincode</label>
+
+    <div class="col-md-4">
+        <input id="pincode" name="pincode" placeholder="" class="form-control input-md" required=""
+               type="text">
+
+    </div>
+</div>
+
+<!-- Multiple Checkboxes -->
+<div class="form-group">
+    <label class="col-md-4 control-label">Best way to contact</label>
+
+    <div class="col-md-4">
+        <div class="checkbox">
+            <label for="best_way_to_contact-0">
+                <input name="best_way_to_contact" id="best_way_to_contact-0" value="Email" type="checkbox">
+                Email
+            </label>
+        </div>
+        <div class="checkbox">
+            <label for="best_way_to_contact-1">
+                <input name="best_way_to_contact" id="best_way_to_contact-1" value="SMS" type="checkbox">
+                SMS
+            </label>
+        </div>
+        <div class="checkbox">
+            <label for="best_way_to_contact-2">
+                <input name="best_way_to_contact" id="best_way_to_contact-2" value="Mobile" type="checkbox">
+                Mobile
+            </label>
+        </div>
+        <div class="checkbox">
+            <label for="best_way_to_contact-3">
+                <input name="best_way_to_contact" id="best_way_to_contact-3" value="WhatsApp"
+                       type="checkbox">
+                WhatsApp
+            </label>
+        </div>
+    </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+    <label class="col-md-4 control-label" for="btn_proceed_from_profile_entry"></label>
+
+    <div class="col-md-4">
+        <button id="btn_proceed_from_profile_entry" name="btn_proceed_from_profile_entry"
+                class="btn btn-success">Next
+        </button>
+    </div>
+</div>
+
+</fieldset>
+</form>
+
+</div>

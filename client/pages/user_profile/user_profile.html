@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Profile - 1StopMake</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="css/bootstrap-social.css"/>
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css"/>
+    <!--<link rel="stylesheet" href="css/modern-business.css"/>
+    <link rel="stylesheet" href="css/1stopwed.css"/>-->
+    <link rel="stylesheet" href="css/font-awesome.min.css"/>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="js/libs/html5shiv.js"></script>
+    <script src="js/libs/respond.min.js"></script>
+    <![endif]-->
+
+    {{!-->gallery/gallery_css.html--}}
+</head>
+
+<body>
+
+{{>header.html}}
+
+<!-- Page Content -->
+<div class="container">
+<!-- Service Tabs -->
+<div class="row">
+<div class="col-lg-12">
+    <h2 class="page-header">User Profile</h2>
+</div>
+<div class="col-lg-12">
+
+<ul id="myTab" class="nav nav-tabs nav-justified">
+    <li class="active"><a href="#service-one" data-toggle="tab">Official Info</a>
+    </li>
+    <!--<li class=""><a href="#service-two" data-toggle="tab">Services Provided</a>
+    </li>
+    <li class=""><a href="#service-three" data-toggle="tab"> Gallery</a>
+    </li>-->
+    <li class=""><a href="#service-four" data-toggle="tab">Bank Info</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+{{>user_profile/tab_official_info.html}}
+{{!-->user_profile/tab_services.html}}
+{{>user_profile/tab_gallery.html--}}
+{{>user_profile/tab_bank.html}}
+</div>
+
+</div>
+</div>
+
+{{>footer.html}}
+
+</div>
+<!-- /.container -->
+
+<!-- jQuery Version 1.11.0 -->
+<script src="js/libs/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="js/libs/bootstrap.min.js"></script>
+<script src="js/libs/bootstrap-multiselect.js"></script>
+
+<script src="js/libs/validate.min.js"></script>
+<script src="pages/user_profile/validation.js"></script>
+
+{{!-->gallery/gallery_js.html--}}
+
+{{{bind_data}}} <!--will insert js/common.js and data binding logic-->
+<script src="pages/user_profile/user_profile.js"></script>
+</body>
+
+</html>

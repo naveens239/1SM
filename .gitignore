@@ -3,3 +3,4 @@ database
 .idea/*
 .DS_Store
 *.log
+Thumbs.db

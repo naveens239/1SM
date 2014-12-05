@@ -2,8 +2,8 @@
 
 module.exports = {
     page_routes: function (router) {
-        router.get('/', home);
-        router.get('/home', home);
+        router.get('/', function(req, res){res.redirect('/home')});
+        //router.get('/home', home);//mock ui would take care of this for now until business logic is ready
     }
 }
 

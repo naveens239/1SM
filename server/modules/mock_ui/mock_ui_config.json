@@ -1,0 +1,5 @@
+{
+  "dynamic_routes": {
+    "featured_model": "/featured_model/:user_id"
+  }
+}
