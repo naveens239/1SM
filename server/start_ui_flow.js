@@ -35,6 +35,12 @@ var server = app.listen(3001, function () {
     console.log('Server listening on port ' + server.address().port);
 });
 
+/*if(app.get('env') === 'development') {
+    setTimeout(function () {
+        var routes_module = require('./modules/routes');
+        routes_module.show_express_routes(app);
+    }, 100);
+}*/
 //---------------------------------------------------------------------
 //register dynamic routes
 function rdr(dynamic_routes, ignore_pages, app){
