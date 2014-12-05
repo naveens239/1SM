@@ -134,7 +134,7 @@ function loggerConfig() {
 }
 
 function startServer() {
-    var server = app.listen(3000, function () {
+    var server = app.listen(config.port, function () {
         console.log('Express server listening on port ' + server.address().port);
     });
     return server;

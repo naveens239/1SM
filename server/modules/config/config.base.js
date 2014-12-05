@@ -25,9 +25,5 @@ module.exports = {
             "clientSecret"    : "AOrF78uP90X5qDPHvPqBRHfq",
             "callbackURL"   : "http://1stopwed.com/auth/google/callback"
         }
-    },
-    //global variables
-    db         : null, //will hold the db connection handle
-    environment: "", //will be set in start.js based on NODE_ENV environment value; defaults to development.
-    vendor_services: [] //will be loaded from db
+    }
 }
