@@ -1,0 +1,5 @@
+{
+  "dynamic_routes": {
+    "featured_vendor": "/featured_vendor/:user_id"
+  }
+}

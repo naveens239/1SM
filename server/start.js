@@ -3,20 +3,20 @@
  */
 'use strict';
 
-var core      = require('./core'),
-    express   = require('express'),
-    path      = require('path'),
-    hbs       = require('hbs'),
-    fs        = require('fs'),
-    _         = require('underscore');
+var core = require('./core'),
+    express = require('express'),
+    path = require('path'),
+    hbs = require('hbs'),
+    fs = require('fs'),
+    _ = require('underscore');
 
 var app = express();
 
-var config_module    = require('./modules/config/config')(app.get('env')),
-    config          = config_module.getConfig(),
+var config_module = require('./modules/config/config')(app.get('env')),
+    config = config_module.getConfig(),
     partials_module = require('./modules/partials');
 
-console.log('environment:'+ app.get('env'));
+console.log('environment:' + app.get('env'));
 
 var root_path = path.join(__dirname, '..');
 global.__server_path = path.join(root_path, 'server');
@@ -43,9 +43,9 @@ function oauthConfig() {
 
     //var MongoStore = require('connect-mongo')(session);
     app.use(session({
-        secret           : 'vandrum secret',
-        saveUninitialized: true, //to avoid deprecated msg
-        resave           : true //to avoid deprecated msg
+        secret            : 'vandrum secret',
+        saveUninitialized : true, //to avoid deprecated msg
+        resave            : true //to avoid deprecated msg
         /*,store: new MongoStore({
          db: config.dbip + ":27017"
          })*/
@@ -68,7 +68,7 @@ function viewConfig() {
     //app.use(favicon());//TODO: shouldn't we give path like app.use(favicon(__client_path + '/favicon.ico')); ?
 
     app.use(cookieParser());
-    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(bodyParser.urlencoded({extended : true}));
     app.use(bodyParser.json());
 
     app.use(express.static(__client_path));//Anything under client will not go through routing
@@ -86,24 +86,29 @@ function databaseConfig() {
 function internationalizationConfig() {
     var i18n = require('i18n-2');
     i18n.expressBind(app, {
-        locales  : ['en', 'ml'],
-        directory: 'server/locales',
-        extension: '.json'
+        locales   : ['en', 'ml'],
+        directory : 'server/locales',
+        extension : '.json'
     });
 }
 
 function routeConfig() {
     var router = require('./router');
-    app.use('/', router.root_router);
+    app.use('/', router.page_router);
     app.use('/api', router.api_router);
 
     //list all routes
-    if(app.get('env') === 'development') {
+    setTimeout(function () {
+        var mock_ui_module = require('./modules/mock_ui/mock_ui');
+        mock_ui_module.activate(router.page_router);
+    }, 100);//delay so that all existing routes would be set before mock routes would be added
+
+    if (app.get('env') === 'development') {
         setTimeout(function () {
             var routes_module = require('./modules/routes');
-            routes_module.show_express_routes(router.root_router.stack, "PAGE ROUTES");
+            routes_module.show_express_routes(router.page_router.stack, "PAGE ROUTES");
             routes_module.show_express_routes(router.api_router.stack, "API ROUTES");
-        }, 100);
+        }, 1000);
     }
 }
 
@@ -122,7 +127,7 @@ function errorConfig() {
         res.status(err.status || 500);
 
         res.render('error', {
-            message: err.message//,
+            message : err.message//,
             //error: (config.environment === "development") ? err : {} //show stacktrace only in development
         });
     });
