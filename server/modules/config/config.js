@@ -25,7 +25,7 @@ function fetchConfig(environment) {
     config = require(config_base);//start with base configuration
 
     //extend with env specific configuration
-    var env_config_file = config_path + '.' + environment;
+    var env_config_file = config_path + '.' + environment + '.js';
     if (fs.existsSync(env_config_file)) {
         _.extend(config, require(env_config_file));
     }
