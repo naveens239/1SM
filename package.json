@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "One Stop Make",
   "private": true,
-  "main": "server/start.js",
+  "main": "server/start_ui_flow.js",
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.10.0",

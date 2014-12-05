@@ -7,17 +7,7 @@
 module.exports = {
     port       : process.env.PORT || 3000,
     dbconfig   : {
-        dbpath            : "./mongo", //NOTE: may switch with cassandra or any db here provided u have that db's .js module with same method signatures
-        dbextension_module: "mongo_extension",//Note: may switch with cassandra_extension etc provided u provide cassandra_extension.js in page folders
-        dbname            : "wb",
-        host              : "localhost",
-        port              : 27017,
-        dburl             : "localhost:27017/wb",
-        dbConnectionConfig: {
-            // the key name here must be exactly same as the key of the connection string in Mongodb (assuming Mongodb is used)
-            connectionTimeoutMS: -1,
-            maxPoolSize        : 5
-        }
+        dburl             : "localhost:27017/1SM"
     },
     "oauth"    : {
         "facebook": {

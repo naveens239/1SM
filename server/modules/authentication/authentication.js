@@ -116,22 +116,6 @@ passport.use('local_signup', new LocalStrategy({
 }, callbackLocalSignUp));
 
 function callbackLocalLogin(username, password, done) {
-    /*config.db.getVendorAccount(username, function (err, user) {
-        console.log('err:' + err);
-        console.log('user:' + user);
-        if (err) {
-            return done(err);
-        }
-        if (!user) {
-            return done(null, false, {message: 'Incorrect username.'});
-        }
-        if (user.password != password) {
-            return done(null, false, {message: 'Incorrect password.'});
-        }
-        else {
-            return done(null, user);
-        }
-    });*/
     UserModel.findOne({ username: username }, function(err, user) {
         if (err) return done(err);
         if (!user) return done(null, false, { message: 'Incorrect username.' });
@@ -146,27 +130,6 @@ function callbackLocalLogin(username, password, done) {
 }
 
 function callbackLocalSignUp(username, password, done) {
-    /*config.db.getVendorAccount(username, function (err, user) {
-        console.log('err:' + err);
-        console.log('user:' + user);
-        if (err) {
-            return done(err, user);
-        }
-        if (user != null) {
-            return done(null, false, {message: 'User already signed up.'});
-        }
-        //return done(new Error("User exists"), false);
-        config.db.createVendorAccount({
-                oauth_id      : username,
-                password      : password,
-                is_local_login: true,
-                created       : Date.now()
-            },
-            function (err, insertedUser) {
-                console.log('inserted user:' + insertedUser);
-                return done(err, insertedUser);
-            });
-    });*/
     UserModel.findOne({username:username}, function(err, user){
         if(err){
             console.log(err);

@@ -1,14 +1,6 @@
 {
   "featured_vendors": [
     {
-      "user_id": "1",
-      "obj_profile": {
-        "obj_name": "Bunny",
-        "3d_obj": "bunny.obj",
-        "2d_obj":"bunny.png"
-      }
-    },
-    {
       "user_id": "2",
       "obj_profile": {
         "obj_name": "Ptero",
@@ -38,6 +30,14 @@
         "obj_name": "Rhino",
         "3d_obj": "rhino.obj",
         "2d_obj":"rhino.png"
+      }
+    },
+    {
+      "user_id": "1",
+      "obj_profile": {
+        "obj_name": "Bunny",
+        "3d_obj": "bunny.obj",
+        "2d_obj":"bunny.png"
       }
     },
     {

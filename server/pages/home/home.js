@@ -8,7 +8,5 @@ module.exports = {
 }
 
 function home(req, res) {
-        res.render('home/home', {
-            featured_vendors: {}
-        });
+        res.render('home/home');
 }
