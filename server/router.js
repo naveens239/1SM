@@ -4,13 +4,13 @@
 'use strict';
 
 var express = require('express'),
-    root_router = express.Router(),
+    page_router = express.Router(),
     api_router = express.Router(),
     path = require('path');
 
 //---- Router middleware --------------------
 //TODO: need to track all server calls made by the user and put it in db (may be when exception occurs)
-root_router.use(function (req, res, next) {
+page_router.use(function (req, res, next) {
     var ip = req.header('x-forwarded-for') || req.connection.remoteAddress;
     console.log('router.js: ', req.method, req.url, 'from', ip);
     next();
@@ -29,11 +29,11 @@ function post_exception(req, res) {
     res.end();//so that callback of the post request in core.js gets called
 }
 var routes_module = require('./modules/routes');
-routes_module.set_from_subdirs(path.join(__dirname, 'pages'), root_router, api_router);//load page specific routes
-routes_module.set_from_module(path.join(__dirname, 'modules/authentication/authentication.js'), root_router, api_router);//load authentication routes
+routes_module.set_from_subdirs(path.join(__dirname, 'pages'), page_router, api_router);//load page specific routes
+routes_module.set_from_module(path.join(__dirname, 'modules/authentication/authentication.js'), page_router, api_router);//load authentication routes
 
 
 module.exports = {
-    root_router: root_router,
+    page_router: page_router,
     api_router: api_router
 }

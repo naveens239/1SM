@@ -1,17 +1,13 @@
 module.exports = {
     set_from_subdirs: set_from_subdirs,
     set_from_module: set_from_module,
-    show_express_routes : show_express_routes
+    show_express_routes : show_express_routes,
+    fetch_express_routes: fetch_express_routes
 };
 
 var file_walker = require('filewalker'),
     path = require('path'),
     fs = require('fs');
-
-function show_express_routes(router, title) {
-    var routes = router._router ? router._router.stack : router.stack ? router.stack : router;
-    show(routes, 'express', title);
-}
 
 function set_from_subdirs(scanPath, page_router, api_router, ignore_folders){
     if(!ignore_folders) ignore_folders = {};
@@ -48,6 +44,11 @@ function set_from_module(modulepath, page_router, api_router){
             //Doesn't matter, go ahead with next directory
         }
     }
+}
+
+function show_express_routes(router, title) {
+    var routes = router._router ? router._router.stack : router.stack ? router.stack : router;
+    show(routes, 'express', title);
 }
 
 function show(routes, src, title) {
@@ -90,4 +91,23 @@ function show(routes, src, title) {
     console.log(table.toString());
 
     return table;
+}
+
+function fetch_express_routes(router){
+    var routes_stack = router._router ? router._router.stack : router.stack ? router.stack : router;
+    var routes = [];
+
+    for (var key in routes_stack) {
+        if (routes_stack.hasOwnProperty(key)) {
+            var val = routes_stack[key];
+            if (val.route) {
+                val = val.route;
+                var _o = {};
+                _o[val.stack[0].method] = val.path;
+                routes.push(_o);
+            }
+        }
+    }
+
+    return routes;
 }
