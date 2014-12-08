@@ -18,7 +18,6 @@ var config_module = require('./modules/config/config'),
 config_module.init(app.get('env'));//initialized only once
 var config = config_module.getConfig();
 console.log('environment:' + config.environment);
-console.log(config);
 
 var root_path = path.join(__dirname, '..');
 global.__server_path = path.join(root_path, 'server');

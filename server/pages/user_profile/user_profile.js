@@ -21,6 +21,104 @@ module.exports = {
     }
 };
 
+function setProfileInSession(req) {
+    var profile = req.session.passport.user.user_profile ? req.session.passport.user.user_profile : {};
+    //console.log(JSON.stringify(req.body));
+    //TODO: should check for valid_items before storing in db.
+    /*var valid_items = ['vendor_name', 'email', 'website', 'facebook', 'twitter',
+     'mobile', 'altphone', 'landphone', 'addressline1', 'addressline2', 'city', 'pincode', 'state',
+     'selectSevice'];
+
+     _.each(valid_items, function(item){
+     if(req.body[item]){
+     profile[item] = req.body[item];
+     }
+     });*/
+    //TODO: replace with above commented code once valid_items are known
+    _.each(req.body, function (value, key) {
+        profile[key] = value;
+    });
+
+    req.session.passport.user.user_profile = profile;
+    return profile;
+}
+
+function user_profile(req, res) {
+    var user = req.session.passport.user;
+
+    console.log('user:'+JSON.stringify(user));
+
+    if (!user || !user.username) {
+        console.log("Error finding username");
+        res.redirect("/");
+        return;
+    }
+
+    var user_profile_model = require('./models/user_profile');
+
+    user_profile_model.findOne({username:user.username}, function (err, user_profile) {
+        if(err) {
+            console.log(err);
+            return;
+        }
+
+        var flat_data={};
+        if(!user_profile){
+            flat_data = { email: user.email, mobile: user.mobile };
+        }
+        console.log('user_profile:'+ user_profile);
+
+        core.defaults(flat_data, user_profile.identifiers, user_profile.bank,
+            {vendor_name:user_profile.vendor_name});//extend without override
+
+        console.log('flat_data:'+ JSON.stringify(flat_data));
+
+        res.render('user_profile/user_profile', _.extend(core.bind_data(flat_data), {'vendor_services': config.vendor_services}));
+    });
+}
+
+//Test code to skip mandatory login check
+/*function user_profile(req, res) {
+ res.render('user_profile/user_profile', {});
+ }*/
+
+function save_in_session(req, res) {
+    setProfileInSession(req);
+    res.send(true);
+}
+
+function user_profile_save(req, res) {
+    var username = req.session.passport.user.username,
+        user_profile_model = require('./models/user_profile');
+
+    user_profile_model.findOne({username:username}, function (err, user_profile) {
+        if(err) {
+            console.log(err);
+            return;
+        }
+
+        if(!user_profile){
+            user_profile = new user_profile_model();
+            user_profile.username = username;
+        }
+
+        var profile_data = setProfileInSession(req);
+        core.flatdata_to_model(profile_data, user_profile);
+        console.log(user_profile);
+
+        user_profile.save(function(err) {
+            if(err) {
+                console.log("Error: could not save user: " + username);
+                return res.send(false);
+            }
+            else {
+                console.log("Saved user: " + username);
+                return res.send(true);
+            }
+        });
+    });
+}
+
 /*
  fetch gallery picture paths
  */
@@ -155,102 +253,3 @@ function finishUpload(res, dir, fileNameObj) {
  }
  });
  }*/
-
-function setProfileInSession(req) {
-    var profile = req.session.passport.user.user_profile ? req.session.passport.user.user_profile : {};
-    console.log(JSON.stringify(req.body));
-    //TODO: should check for valid_items before storing in db.
-    /*var valid_items = ['vendor_name', 'email', 'website', 'facebook', 'twitter',
-     'mobile', 'altphone', 'landphone', 'addressline1', 'addressline2', 'city', 'pincode', 'state',
-     'selectSevice'];
-
-     _.each(valid_items, function(item){
-     if(req.body[item]){
-     profile[item] = req.body[item];
-     }
-     });*/
-    //TODO: replace with above commented code once valid_items are known
-    _.each(req.body, function (value, key) {
-        profile[key] = value;
-    });
-
-    req.session.passport.user.user_profile = profile;
-    return profile;
-}
-
-function user_profile(req, res) {
-    var user = req.session.passport.user;
-
-    console.log('user:'+JSON.stringify(user));
-
-    if (!user || !user.username) {
-        console.log("Error finding username");
-        res.redirect("/");
-        return;
-    }
-
-    var user_profile_model = require('./models/user_profile');
-
-    user_profile_model.findOne({username:user.username}, function (err, user_profile) {
-        if(err) {
-            console.log(err);
-            return;
-        }
-
-        if(!user_profile){
-            user_profile = { email: user.email, mobile: user.mobile };
-        }
-        console.log('user_profile:'+ user_profile);
-
-        res.render('user_profile/user_profile', _.extend(core.bind_data(user_profile), {'vendor_services': config.vendor_services}));
-    });
-}
-
-//Test code to skip mandatory login check
-/*function user_profile(req, res) {
- res.render('user_profile/user_profile', {});
- }*/
-
-function save_in_session(req, res) {
-    setProfileInSession(req);
-    res.send(true);
-}
-
-function user_profile_save(req, res) {
-    var profile = setProfileInSession(req);
-
-    var username = req.session.passport.user.username;
-
-    var user_profile_model = require('./models/user_profile');
-
-    user_profile_model.findOne({username:username}, function (err, user_profile) {
-        if(err) {
-            console.log(err);
-            return;
-        }
-        console.log('user_profile:'+user_profile);
-        console.log('!user_profile:'+!user_profile);
-
-        if(!user_profile){
-            user_profile = new user_profile_model();
-
-            user_profile.username = username;
-        }
-
-        var user_profile_schema = user_profile_model.schema;
-        console.log('schema::'+user_profile_schema);
-        var identifiers = user_profile_model.identifiers.schema;
-        console.log('identifiers:'+JSON.stringify(identifiers));
-
-        user_profile.save(function(err) {
-            if(err) {
-                console.log("Error: could not save user: " + username);
-                return res.send(false);
-            }
-            else {
-                console.log("Saved user: " + username);
-                return res.send(true);
-            }
-        });
-    });
-}

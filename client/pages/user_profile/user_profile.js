@@ -44,7 +44,7 @@ function setEvents() {
     $("#btn_proceed_from_bank").click(saveProfile);
 
     //before switching to next tab, validate current tab's form
-    /*$('#myTab a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+    $('#myTab a[data-toggle="tab"]').on('show.bs.tab', function (e) {
         var currentTab = e.relatedTarget.toString().split('#')[1];
         //var nextTab = e.target.toString().split('#')[1];
         //alert("currentTab:"+currentTab+"\n\n"+"nextTab:"+nextTab);
@@ -60,7 +60,7 @@ function setEvents() {
                 e.preventDefault();
             }
         }
-    });*/
+    });
 }
 
 function multiselect() {

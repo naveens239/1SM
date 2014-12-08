@@ -14,7 +14,7 @@
     "filewalker": "^0.1.2",
     "hbs": "^2.7.0",
     "i18n-2": "^0.4.6",
-    "mongoose": "^3.8.20",
+    "mongoose": "^3.9.6",
     "passport": "^0.2.1",
     "passport-facebook": "^1.0.3",
     "passport-google-oauth": "^0.1.5",
@@ -23,6 +23,8 @@
     "underscore": "^1.7.0"
   },
   "devDependencies": {
-    "cli-table": "^0.3.1"
+    "chai": "^1.10.0",
+    "cli-table": "^0.3.1",
+    "mocha": "^2.0.1"
   }
 }
