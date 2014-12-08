@@ -2,7 +2,7 @@ var GoogleStrategy   = require('passport-google-oauth').OAuth2Strategy,//TODO: g
     FacebookStrategy = require('passport-facebook').Strategy,
     LocalStrategy    = require('passport-local').Strategy,
     passport         = require('passport'),
-    config           = require('../config/config')().getConfig(),
+    config           = require('../config/config').getConfig(),
     UserModel        = require('./models/user');
 
 module.exports = {

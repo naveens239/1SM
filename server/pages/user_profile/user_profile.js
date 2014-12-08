@@ -1,6 +1,6 @@
 'use strict';
 var core     = require(__server_path + '/core'),
-    config   = require(__server_path + '/modules/config/config')().getConfig(),//TODO: ppc, find a better way for config
+    config   = require(__server_path + '/modules/config/config').getConfig(),
     //util     = require('util'),
     fs       = require('fs'),
     path     = require('path'),
@@ -180,29 +180,30 @@ function setProfileInSession(req) {
 
 function user_profile(req, res) {
     var user = req.session.passport.user;
+
     console.log('user:'+JSON.stringify(user));
+
     if (!user || !user.username) {
         console.log("Error finding username");
         res.redirect("/");
         return;
     }
-    var oauth_id = user.username;
-    console.log("user_profile for oauth_id:" + oauth_id);
 
-    if (user.user_profile) {
-        var profile = user.user_profile;
-        res.render('user_profile/user_profile', _.extend(core.bind_data(profile), {'vendor_services': config.vendor_services}));
-    } else {
-        //TODO: ppc, fix this with mongoose
-        req.db.getVendorAccount(oauth_id, function (e, docs) {
-            console.log("account -> " + JSON.stringify(docs));
-            if (docs && docs.user_profile) {
-                user.user_profile = docs.user_profile;
-            }
-            var profile = user.user_profile ? user.user_profile : { email: user.email, mobile: user.mobile };
-            res.render('user_profile/user_profile', _.extend(core.bind_data(profile), {'vendor_services': config.vendor_services}));
-        });
-    }
+    var user_profile_model = require('./models/user_profile');
+
+    user_profile_model.findOne({username:user.username}, function (err, user_profile) {
+        if(err) {
+            console.log(err);
+            return;
+        }
+
+        if(!user_profile){
+            user_profile = { email: user.email, mobile: user.mobile };
+        }
+        console.log('user_profile:'+ user_profile);
+
+        res.render('user_profile/user_profile', _.extend(core.bind_data(user_profile), {'vendor_services': config.vendor_services}));
+    });
 }
 
 //Test code to skip mandatory login check
@@ -219,6 +220,37 @@ function user_profile_save(req, res) {
     var profile = setProfileInSession(req);
 
     var username = req.session.passport.user.username;
-    req.db.saveVendorProfile(username, profile);//Save profile in database
-    res.send(true);
+
+    var user_profile_model = require('./models/user_profile');
+
+    user_profile_model.findOne({username:username}, function (err, user_profile) {
+        if(err) {
+            console.log(err);
+            return;
+        }
+        console.log('user_profile:'+user_profile);
+        console.log('!user_profile:'+!user_profile);
+
+        if(!user_profile){
+            user_profile = new user_profile_model();
+
+            user_profile.username = username;
+        }
+
+        var user_profile_schema = user_profile_model.schema;
+        console.log('schema::'+user_profile_schema);
+        var identifiers = user_profile_model.identifiers.schema;
+        console.log('identifiers:'+JSON.stringify(identifiers));
+
+        user_profile.save(function(err) {
+            if(err) {
+                console.log("Error: could not save user: " + username);
+                return res.send(false);
+            }
+            else {
+                console.log("Saved user: " + username);
+                return res.send(true);
+            }
+        });
+    });
 }

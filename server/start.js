@@ -12,11 +12,13 @@ var core = require('./core'),
 
 var app = express();
 
-var config_module = require('./modules/config/config')(app.get('env')),
-    config = config_module.getConfig(),
+var config_module = require('./modules/config/config'),
     partials_module = require('./modules/partials');
 
-console.log('environment:' + app.get('env'));
+config_module.init(app.get('env'));//initialized only once
+var config = config_module.getConfig();
+console.log('environment:' + config.environment);
+console.log(config);
 
 var root_path = path.join(__dirname, '..');
 global.__server_path = path.join(root_path, 'server');
