@@ -67,12 +67,13 @@ function user_profile(req, res) {
             flat_data = { email: user.email, mobile: user.mobile };
         }
         console.log('user_profile:'+ user_profile);
-
-        core.defaults(flat_data, user_profile.identifiers, user_profile.bank,
-            {vendor_name:user_profile.vendor_name});//extend without override
+        core.model_to_flat_data(user_profile, flat_data);
 
         console.log('flat_data:'+ JSON.stringify(flat_data));
 
+        if(flat_data.best_way_to_contact){
+            flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
+        }
         res.render('user_profile/user_profile', _.extend(core.bind_data(flat_data), {'vendor_services': config.vendor_services}));
     });
 }
@@ -103,7 +104,10 @@ function user_profile_save(req, res) {
         }
 
         var profile_data = setProfileInSession(req);
-        core.flatdata_to_model(profile_data, user_profile);
+        profile_data.is_vendor = (profile_data.vendor_name.length>0);
+
+        core.flat_data_to_model(profile_data, user_profile);
+
         console.log(user_profile);
 
         user_profile.save(function(err) {

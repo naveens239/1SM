@@ -2,7 +2,8 @@
 var _ = require('underscore');
 
 module.exports = {
-    flatdata_to_model:flatdata_to_model,
+    flat_data_to_model:flat_data_to_model,
+    model_to_flat_data:model_to_flat_data,
     defaults        : defaults,
     bind_data       : bind_data,
     isEmail         : isEmail,
@@ -25,8 +26,23 @@ function defaults(obj) {
     return obj;
 }
 
+function model_to_flat_data(model, flat_data){
+    var keys = _.without(_.keys(model.schema.paths), '_id', '__v'),
+        data_key, model_pointer;
+
+    if(!flat_data) flat_data = {};
+
+    _.each(keys, function(key){
+        model_pointer = traverse_upto_last(model, key);
+        data_key = key.split(".").pop();//last element
+        flat_data[data_key] = model_pointer[data_key];
+    });
+
+    return flat_data;
+}
+
 //copies flat data to anywhere in the model where the key matches
-function flatdata_to_model(flatdata, model){
+function flat_data_to_model(flat_data, model){
     var keys = _.without(_.keys(model.schema.paths), '_id', '__v'),
         data_key, model_pointer;
 
@@ -34,8 +50,8 @@ function flatdata_to_model(flatdata, model){
         model_pointer = traverse_upto_last(model, key);
         data_key = key.split(".").pop();//last element
 
-        if(flatdata[data_key]){
-            model_pointer[data_key] = flatdata[data_key];
+        if(flat_data[data_key]){
+            model_pointer[data_key] = flat_data[data_key];
         }
     });
 }

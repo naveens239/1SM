@@ -29,16 +29,27 @@ var test_data = {
     "account_number"      : "g1"
 };
 
-suite("Flat Data to Model Test", function () {
+suite("Flat Data to Model and Back Test", function () {
 
     test("should copy to model", function () {
         var profile = new user_profile_model();
 
-        core.flatdata_to_model(test_data, profile);
+        core.flat_data_to_model(test_data, profile);
         console.log(profile);
 
         expect(profile.identifiers.email).to.equal(test_data.email);
         expect(profile.bank.bank_name).to.equal(test_data.bank_name);
     });
 
+    test("should copy from model", function () {
+        var profile = new user_profile_model();
+
+        core.flat_data_to_model(test_data, profile);
+
+        var flat_data = core.model_to_flat_data(profile);
+        console.log('flat_data:'+JSON.stringify(flat_data));
+
+        expect(flat_data.email).to.equal(profile.identifiers.email);
+        expect(flat_data.bank_name).to.equal(profile.bank.bank_name);
+    });
 });
