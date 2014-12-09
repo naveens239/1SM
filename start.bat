@@ -1,8 +1,4 @@
 @echo off
 cls
-echo                          *  *  *  *  *  *  *  *  *  *
-echo                        *                              *
-echo  * * * * * * * * * * *     1 S t o p M a k e . c o m      * * * * * * * * * * *
-echo                        *                              *
-echo                          *  *  *  *  *  *  *  *  *  *
+type ascii_art.txt
 nodemon --watch client\partials --watch server -e html,js
