@@ -1,6 +1,5 @@
 /**
  * All configurations are made here
- * eg. for switching database, mention the path of the module in dbpath, like  "./cassandra or './mongo', and mention the dbextension_module name"
  */
 'use strict';
 
