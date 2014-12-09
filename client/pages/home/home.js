@@ -88,19 +88,21 @@ function validate_forgot_password(){
 }
 
 function facebookLogin() {
-    var url = '/auth/facebook',
+    /*var url = '/auth/facebook',
         width = 800,
         height = 350,
         top = (window.outerHeight - height) / 2,
         left = (window.outerWidth - width) / 2;
-    window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+    window.open(url, 'facebook_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);*/
+    window.location = '/auth/facebook';
 }
 
 function googleLogin() {
-    var url = '/auth/google',
+    /*var url = '/auth/google',
         width = 800,
         height = 350,
         top = (window.outerHeight - height) / 2,
         left = (window.outerWidth - width) / 2;
-    window.open(url, 'google_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
+    window.open(url, 'google_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);*/
+    window.location = '/auth/google';
 }

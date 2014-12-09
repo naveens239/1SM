@@ -11,17 +11,17 @@ module.exports = {
         //google
         router.get('/auth/google', passport.authenticate('google', {scope : ['https://www.googleapis.com/auth/userinfo.email']}));
         router.get('/auth/google/callback', passport.authenticate('google', {
-            successRedirect : '/auth/success',
-            failureRedirect : '/auth/failure'
+            successRedirect : '/login/success',//'/auth/success',
+            failureRedirect : '/login/failure'//'/auth/failure'
         }));
         //facebook
         router.get('/auth/facebook', passport.authenticate('facebook'));//TODO: check param display
         router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-            successRedirect : '/auth/success',
-            failureRedirect : '/auth/failure'
+            successRedirect : '/login/success',//'/auth/success',
+            failureRedirect : '/login/failure'//'/auth/failure'
         }));
         //facebook, google login succes/failure
-        router.get('/auth/success', function (req, res) {
+        /*router.get('/auth/success', function (req, res) {
             console.log('in /auth/success, req.user:' + JSON.stringify(req.user));
             res.render('after_auth/after_auth', {
                 state : 'success',
@@ -31,7 +31,7 @@ module.exports = {
         router.get('/auth/failure', function (req, res) {
             console.log('in /auth/failure');
             res.render('after_auth/after_auth', res, {state : 'failure', user : null});
-        });
+        });*/
         //login
         router.post('/login/mobile', passport.authenticate('local_login_mobile', {
             successRedirect : '/login/success',
