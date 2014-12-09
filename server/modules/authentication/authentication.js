@@ -2,59 +2,25 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,//TODO: goo
     FacebookStrategy = require('passport-facebook').Strategy,
     LocalStrategy = require('passport-local').Strategy,
     passport = require('passport'),
-    config = require('../config/config').getConfig(),
-    UserModel = require('./models/user'),
-    core = require(__server_path + '/core');
+    core = require(__server_path + '/core'),
+    config = core.require_module('config').getConfig(),
+    UserModel = require('./models/user');
 
 module.exports = {
     init_session: init_session,
     page_routes  : function (router) {
         //google
         router.get('/auth/google', passport.authenticate('google', {scope : ['https://www.googleapis.com/auth/userinfo.email']}));
-        router.get('/auth/google/callback', passport.authenticate('google', {
-            successRedirect : '/login/success',//'/auth/success',
-            failureRedirect : '/login/failure'//'/auth/failure'
-        }));
+        router.get('/auth/google/callback', passport.authenticate('google', success_failure_json()));
         //facebook
-        router.get('/auth/facebook', passport.authenticate('facebook'));//TODO: check param display
-        router.get('/auth/facebook/callback', passport.authenticate('facebook', {
-            successRedirect : '/login/success',//'/auth/success',
-            failureRedirect : '/login/failure'//'/auth/failure'
-        }));
-        //facebook, google login succes/failure
-        /*router.get('/auth/success', function (req, res) {
-            console.log('in /auth/success, req.user:' + JSON.stringify(req.user));
-            res.render('after_auth/after_auth', {
-                state : 'success',
-                user  : JSON.stringify(req.user)
-            });
-        });
-        router.get('/auth/failure', function (req, res) {
-            console.log('in /auth/failure');
-            res.render('after_auth/after_auth', res, {state : 'failure', user : null});
-        });*/
+        router.get('/auth/facebook', passport.authenticate('facebook'));
+        router.get('/auth/facebook/callback', passport.authenticate('facebook', success_failure_json()));
         //login
-        router.post('/login/mobile', passport.authenticate('local_login_mobile', {
-            successRedirect : '/login/success',
-            failureRedirect : '/login/failure',
-            failureFlash    : true
-        }));
-        router.post('/login/email', passport.authenticate('local_login_email', {
-            successRedirect : '/login/success',
-            failureRedirect : '/login/failure',
-            failureFlash    : true
-        }));
+        router.post('/login/mobile', passport.authenticate('local_login_mobile', success_failure_json(true)));
+        router.post('/login/email', passport.authenticate('local_login_email', success_failure_json(true)));
         //signup
-        router.post('/signup/mobile', passport.authenticate('local_signup', {
-            successRedirect : '/login/success',
-            failureRedirect : '/login/failure',
-            failureFlash    : true
-        }));
-        router.post('/signup/email', passport.authenticate('local_signup', {
-            successRedirect : '/login/success',
-            failureRedirect : '/login/failure',
-            failureFlash    : true
-        }));
+        router.post('/signup/mobile', passport.authenticate('local_signup_mobile', success_failure_json(true)));
+        router.post('/signup/email', passport.authenticate('local_signup_email', success_failure_json(true)));
         //login/signup success/failure
         router.get('/login/success', function (req, res, next) {
             console.log('in login/success, user:' + JSON.stringify(req.session.passport.user));
@@ -71,6 +37,17 @@ module.exports = {
         });
     }
 };
+
+function success_failure_json(flash){
+    var data = {
+        successRedirect : '/login/success',
+        failureRedirect : '/login/failure'
+    };
+    if(flash){
+        data['failureFlash'] = true;
+    }
+    return data;
+}
 
 passport.use(new FacebookStrategy({
     clientID     : config.oauth.facebook.clientID,
@@ -132,10 +109,15 @@ passport.use('local_login_mobile', new LocalStrategy({
     passwordField : 'password'
 }, callbackLocalLoginMobile));
 
-passport.use('local_signup', new LocalStrategy({
+passport.use('local_signup_email', new LocalStrategy({
     usernameField : 'username',
     passwordField : 'password'
 }, callbackLocalSignUp));
+
+passport.use('local_signup_mobile', new LocalStrategy({
+    usernameField : 'username',
+    passwordField : 'password'
+}, callbackLocalSignUpMobile));
 
 function callbackLocalLoginMobile(username, password, done) {
     return callbackLocalLogin(core.prefix_country_code(username), password, done);
@@ -154,6 +136,10 @@ function callbackLocalLogin(username, password, done) {
             }
         });
     });
+}
+
+function callbackLocalSignUpMobile(username, password, done) {
+    return callbackLocalSignUp(core.prefix_country_code(username), password, done);
 }
 
 function callbackLocalSignUp(username, password, done) {
