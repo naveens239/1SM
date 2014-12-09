@@ -69,7 +69,7 @@ module.exports = {
             res.redirect('/');
         });
     }
-}
+};
 
 passport.use(new FacebookStrategy({
     clientID     : config.oauth.facebook.clientID,
