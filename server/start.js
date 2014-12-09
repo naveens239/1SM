@@ -3,59 +3,42 @@
  */
 'use strict';
 
-var core = require('./core'),
-    express = require('express'),
+var express = require('express'),
     path = require('path'),
     hbs = require('hbs'),
-    fs = require('fs'),
     _ = require('underscore');
 
-var app = express();
-
-var config_module = require('./modules/config/config'),
-    partials_module = require('./modules/partials');
-
-config_module.init(app.get('env'));//initialized only once
-var config = config_module.getConfig();
-console.log('environment:' + config.environment);
-
+//set global paths
 var root_path = path.join(__dirname, '..');
 global.__server_path = path.join(root_path, 'server');
 global.__client_path = path.join(root_path, 'client');
 
-oauthConfig();
+var app = express();
+
+//load env specific config file
+var config_module = require('./modules/config/config');
+config_module.init(app.get('env'));//initialized only once
+var config = config_module.getConfig();
+console.log('environment:' + config.environment);
+
+//setup fb,google,local authentication with session
+var auth_module = require('./modules/authentication/authentication.js');
+auth_module.init_session(app);
+
 viewConfig();
 databaseConfig();
 internationalizationConfig();
 routeConfig();
 errorConfig();
-loggerConfig();
+//loggerConfig();
+
+//load all partials
+var partials_module = require('./modules/partials');
 partials_module.registerAll(path.join(__client_path, 'partials'));
 
 startServer();
 
 //-----------------------
-function oauthConfig() {
-    var session = require('express-session'),
-        flash = require('express-flash'),
-        passport = require('passport');
-
-    require('./modules/authentication/authentication.js');//just load
-
-    //var MongoStore = require('connect-mongo')(session);
-    app.use(session({
-        secret            : 'vandrum secret',
-        saveUninitialized : true, //to avoid deprecated msg
-        resave            : true //to avoid deprecated msg
-        /*,store: new MongoStore({
-         db: config.dbip + ":27017"
-         })*/
-    }));
-
-    app.use(flash());
-    app.use(passport.initialize());
-    app.use(passport.session());
-}
 
 function viewConfig() {
     var bodyParser = require('body-parser'),
@@ -69,7 +52,7 @@ function viewConfig() {
     //app.use(favicon());//TODO: shouldn't we give path like app.use(favicon(__client_path + '/favicon.ico')); ?
 
     app.use(cookieParser());
-    app.use(bodyParser.urlencoded({extended : true}));
+    app.use(bodyParser.urlencoded({extended: true}));
     app.use(bodyParser.json());
 
     app.use(express.static(__client_path));//Anything under client will not go through routing
@@ -87,9 +70,9 @@ function databaseConfig() {
 function internationalizationConfig() {
     var i18n = require('i18n-2');
     i18n.expressBind(app, {
-        locales   : ['en', 'ml'],
-        directory : 'server/locales',
-        extension : '.json'
+        locales  : ['en', 'ml'],
+        directory: 'server/locales',
+        extension: '.json'
     });
 }
 
@@ -110,7 +93,7 @@ function routeConfig() {
             var routes_module = require('./modules/routes');
             routes_module.show_express_routes(router.page_router.stack, "PAGE ROUTES");
             routes_module.show_express_routes(router.api_router.stack, "API ROUTES");
-        }, 1000);
+        }, 500);
     }
 }
 
@@ -129,16 +112,16 @@ function errorConfig() {
         res.status(err.status || 500);
 
         res.render('error', {
-            message : err.message//,
-            //error: (config.environment === "development") ? err : {} //show stacktrace only in development
+            message: err.message,
+            error  : config.isDevelopment ? err : {} //show stacktrace only in development
         });
     });
 }
 
-function loggerConfig() {
+//function loggerConfig() {
     //var logger = require('morgan');//TODO: how to use morgan correctly? is it needed?
     //app.use(logger('dev'));
-}
+//}
 
 function startServer() {
     var server = app.listen(config.port, function () {

@@ -7,6 +7,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,//TODO: goo
     core = require(__server_path + '/core');
 
 module.exports = {
+    init_session: init_session,
     page_routes  : function (router) {
         //google
         router.get('/auth/google', passport.authenticate('google', {scope : ['https://www.googleapis.com/auth/userinfo.email']}));
@@ -197,3 +198,22 @@ passport.deserializeUser(function (id, done) {
      done(err, user);
      });*/
 });
+
+function init_session(app){
+    var session = require('express-session'),
+        flash = require('express-flash');
+
+    //var MongoStore = require('connect-mongo')(session);
+    app.use(session({
+        secret            : 'vandrum secret',
+        saveUninitialized : true, //to avoid deprecated msg
+        resave            : true //to avoid deprecated msg
+        /*,store: new MongoStore({
+         db: config.dbip + ":27017"
+         })*/
+    }));
+
+    app.use(flash());
+    app.use(passport.initialize());
+    app.use(passport.session());
+}
