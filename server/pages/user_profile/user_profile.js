@@ -64,13 +64,13 @@ function user_profile(req, res) {
 
         var flat_data={};
         if(!user_profile){
+            user_profile = new user_profile_model();
             flat_data = { email: user.email, mobile: user.mobile };
         }
         console.log('user_profile:'+ user_profile);
         core.model_to_flat_data(user_profile, flat_data);
 
-        console.log('flat_data:'+ JSON.stringify(flat_data));
-
+        //TODO: why is this needed. store as array of strings.
         if(flat_data.best_way_to_contact){
             flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
         }
