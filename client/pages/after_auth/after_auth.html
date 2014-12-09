@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>1StopWed Application Authentication - Auth Result</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+</head>
+<body>
+<h1>Authentication {{state}}</h1>
+<script type="text/javascript">
+    /*if (window.opener) {
+        window.opener.focus();
+
+        var state = '{{state}}';
+        var user = {{{user}}};
+        console.log('in after_auth.html, [state:'+state+'][user:'+user+']');
+        if (window.opener.app &&
+                window.opener.app.authState) {
+
+            window.opener.app.authState(state, user);
+        }
+    }*/
+
+    if (window.opener) {
+        window.opener.location = '/user_profile';
+    }
+    window.close();
+</script>
+</body>
+</html>

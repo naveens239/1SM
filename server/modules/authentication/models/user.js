@@ -7,6 +7,7 @@ var user_schema = new mongoose.Schema({
     password: String,
     email: String,
     mobile: String,
+    social: String,
     resetPasswordToken: String,
     resetPasswordExpires: Date
 });

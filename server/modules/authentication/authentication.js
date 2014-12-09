@@ -25,7 +25,7 @@ module.exports = {
             console.log('in /auth/success, req.user:' + JSON.stringify(req.user));
             res.render('after_auth/after_auth', {
                 state : 'success',
-                user  : req.user ? JSON.stringify(req.user) : null
+                user  : JSON.stringify(req.user)
             });
         });
         router.get('/auth/failure', function (req, res) {
@@ -34,8 +34,8 @@ module.exports = {
         });
         //login
         router.post('/login/mobile', passport.authenticate('local_login_mobile', {
-            successRedirect : '/loginSuccess',
-            failureRedirect : '/loginFailure',
+            successRedirect : '/login/success',
+            failureRedirect : '/login/failure',
             failureFlash    : true
         }));
         router.post('/login/email', passport.authenticate('local_login_email', {
@@ -55,12 +55,12 @@ module.exports = {
             failureFlash    : true
         }));
         //login/signup success/failure
-        router.get('/login/failure', function (req, res, next) {
-            res.redirect("/");
-        });
         router.get('/login/success', function (req, res, next) {
             console.log('in login/success, user:' + JSON.stringify(req.session.passport.user));
             res.redirect("/user_profile");
+        });
+        router.get('/login/failure', function (req, res, next) {
+            res.redirect("/");
         });
         //logout
         router.get('/logout', function (req, res) {
@@ -75,40 +75,49 @@ passport.use(new FacebookStrategy({
     clientID     : config.oauth.facebook.clientID,
     clientSecret : config.oauth.facebook.clientSecret,
     callbackURL  : config.oauth.facebook.callbackURL
-}, callback));
+}, callback_facebook));
 
 passport.use(new GoogleStrategy({
     clientID     : config.oauth.google.clientID,
     clientSecret : config.oauth.google.clientSecret,
     callbackURL  : config.oauth.google.callbackURL
-}, callback));
+}, callback_google));
 
-function callback(accessToken, refreshToken, profile, done) {
+function callback_facebook(accessToken, refreshToken, profile, done){
+    return callback_social("facebook", accessToken, refreshToken, profile, done);
+}
+
+function callback_google(accessToken, refreshToken, profile, done){
+    return callback_social("google", accessToken, refreshToken, profile, done);
+}
+
+function callback_social(which_social, accessToken, refreshToken, profile, done) {
     console.log('-------------------------------------------------------------------');
-    console.log('[accessToken:', accessToken, ']\n[refreshToken:', refreshToken, ']\n');//'[profile:', profile, ']');
+    console.log(which_social + ' login');
+    console.log('[accessToken:', accessToken, ']\n[refreshToken:', refreshToken, ']');
     console.log('-------------------------------------------------------------------');
-    config.db.getVendorAccount(profile.id, function (err, user) {
-        console.log('err:' + err);
-        console.log('user:' + user);
+    UserModel.findOne({username : profile.id}, function (err, user) {
         if (err) {
-            console.log('in callback err:' + err);
-            return done(err);
+            console.log(err);
+            return done(err, user);
         }
-        if (user != null) {
-            console.log('in callback found user:' + user);
+        if (user) {
             return done(null, user);
         }
-        config.db.createVendorAccount({
-                oauth_id : profile.id,
-                name     : profile.displayName,
-                created  : Date.now(),
-                json     : profile._json
-            },
-            function (err, insertedUser) {
-                console.log('inserted user:' + insertedUser);
-                return done(err, insertedUser);
-            });
 
+        var user = new UserModel({
+            username : profile.id,
+            social : which_social
+        });
+
+        user.save(function (err, insertedUser) {
+            if (err) {
+                console.log(err);
+                return done(err, insertedUser);
+            }
+            console.log('inserted user:' + insertedUser);
+            return done(err, insertedUser);
+        });
     });
 }
 

@@ -6,8 +6,8 @@ $(function () {
 
 function setEvents() {
     //Set html element event handlers
-    //$('#fbLink').click(facebookLogin);
-    //$('#googleLink').click(googleLogin);
+    $('#fbLink').click(facebookLogin);
+    $('#googleLink').click(googleLogin);
     $('#btnLocalLoginMobile').click(function(){ return validate_login('#formLoginPhone', true)});
     $('#btnLocalLoginEmail').click(function(){ return validate_login('#formLoginEmail', false)});
     $('#btnLocalSignUpMobile').click(function(){ return validate_signup('#formSignupMobile', true)});
@@ -16,7 +16,7 @@ function setEvents() {
     //$('#btnForgotPassword').click(validate_forgot_password);
 }
 
-function init() {
+/*function init() {
     window.app = {
         authState: function (state, user) {
             console.log('in parent authState, [state:' + state + '][user:' + user + ']');
@@ -33,7 +33,7 @@ function init() {
             }
         }
     };
-}
+}*/
 
 function validate_login(formId, isMobile){
     var emailConstraint = { username: commonModule.constraints.email };
@@ -104,8 +104,3 @@ function googleLogin() {
         left = (window.outerWidth - width) / 2;
     window.open(url, 'google_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
 }
-
-/*
-function logout() {
-    window.location = '/logout';
-}*/
