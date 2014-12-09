@@ -65,6 +65,7 @@ function register_page_routes(scanPath, ignore_pages, router){
 }
 
 function render_callback(req, res) {
+    var page_name = req.path.replace(/^\//, '');
     res.render(page_name + '/' + page_name, read_mock_data(req));
 }
 
