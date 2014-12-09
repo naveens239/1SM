@@ -11,8 +11,8 @@ module.exports = {
     },
     "oauth"    : {
         "facebook": {
-            "clientID"    : "813703648669257",
-            "clientSecret": "39427539054aa777d7dfb76fe743e3b3",
+            "clientID"    : "1539116369666898",
+            "clientSecret": "68df0aa984dad2458db26af49ed0297b",
             "callbackURL" : "http://1stopmake.com/auth/facebook/callback"
         },
         "twitter" : {
