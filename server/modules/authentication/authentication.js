@@ -39,37 +39,33 @@ module.exports = {
             failureFlash    : true
         }));
         router.post('/login/email', passport.authenticate('local_login_email', {
-            successRedirect : '/loginSuccess',
-            failureRedirect : '/loginFailure',
+            successRedirect : '/login/success',
+            failureRedirect : '/login/failure',
             failureFlash    : true
         }));
         //signup
         router.post('/signup/mobile', passport.authenticate('local_signup', {
-            successRedirect : '/loginSuccess',
-            failureRedirect : '/loginFailure',
+            successRedirect : '/login/success',
+            failureRedirect : '/login/failure',
             failureFlash    : true
         }));
         router.post('/signup/email', passport.authenticate('local_signup', {
-            successRedirect : '/loginSuccess',
-            failureRedirect : '/loginFailure',
+            successRedirect : '/login/success',
+            failureRedirect : '/login/failure',
             failureFlash    : true
         }));
         //login/signup success/failure
-        router.get('/loginFailure', function (req, res, next) {
+        router.get('/login/failure', function (req, res, next) {
             res.redirect("/");
         });
-        router.get('/loginSuccess', function (req, res, next) {
-            console.log('in loginSuccess, user:' + JSON.stringify(req.session.passport.user));
-            //req.session.passport.user.oauth_id = req.session.passport.user.username;
+        router.get('/login/success', function (req, res, next) {
+            console.log('in login/success, user:' + JSON.stringify(req.session.passport.user));
             res.redirect("/user_profile");
         });
         //logout
         router.get('/logout', function (req, res) {
             console.log('in logout');
             req.logout();
-            /*if (req.session.passport && req.session.passport.user) {
-             req.session.passport.user = null;
-             }*/
             res.redirect('/');
         });
     }
