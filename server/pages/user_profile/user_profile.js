@@ -1,7 +1,8 @@
 'use strict';
-var core = require(path.join(__server_path,'core')),
+var path     = require('path'),
+    core = require(path.join(__server_path,'core')),
     config   = core.require_module('config').getConfig(),
-    path     = require('path'),
+
     //util     = require('util'),
     //fs       = require('fs'),
     //gm       = require('gm'),
