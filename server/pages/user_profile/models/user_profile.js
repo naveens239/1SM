@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    core     = require(__server_path + '/core');
 
 var identifiers_schema =
 {
@@ -41,5 +42,15 @@ var user_profile_schema = new mongoose.Schema(
         created             : {type : Date, default : Date.now},
         bank                : bank_schema
     });
+
+user_profile_schema.pre('save', function(next) {
+    console.log('in user_profile_schema pre save');
+    var user_profile = this;
+    //prefix country code if needed
+    if(user_profile.identifiers.mobile){
+        user_profile.identifiers.mobile = core.prefix_country_code(user_profile.identifiers.mobile);
+    }
+    next();
+});
 
 module.exports = mongoose.model('user_profile', user_profile_schema);

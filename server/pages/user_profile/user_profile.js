@@ -24,7 +24,7 @@ module.exports = {
 function setProfileInSession(req) {
     var profile = req.session.passport.user.user_profile ? req.session.passport.user.user_profile : {};
     //console.log(JSON.stringify(req.body));
-    //TODO: should check for valid_items before storing in db.
+    //TODO: should check for valid_items before saving in session
     /*var valid_items = ['vendor_name', 'email', 'website', 'facebook', 'twitter',
      'mobile', 'altphone', 'landphone', 'addressline1', 'addressline2', 'city', 'pincode', 'state',
      'selectSevice'];
@@ -34,7 +34,6 @@ function setProfileInSession(req) {
      profile[item] = req.body[item];
      }
      });*/
-    //TODO: replace with above commented code once valid_items are known
     _.each(req.body, function (value, key) {
         profile[key] = value;
     });
@@ -67,15 +66,14 @@ function user_profile(req, res) {
             core.model_to_flat_data(user_profile, flat_data);
         }
         else{
-            var mobile_without_country_code = user.mobile ? user.mobile.replace(core.get_country_code(), "") : "";
-            flat_data = { email: user.email, mobile: mobile_without_country_code };
+            flat_data = { email: user.email, mobile: user.mobile };
         }
-        console.log('user_profile:'+ user_profile);
-
-        //TODO: why is this needed. store as array of strings.
-        if(flat_data.best_way_to_contact){
+        //massage data before displaying
+        flat_data.mobile = core.remove_country_code(flat_data.mobile);
+        if(flat_data.best_way_to_contact){//TODO: why is this needed. store as array of strings.
             flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
         }
+
         console.log('response flat_data::'+JSON.stringify(flat_data));
         var response_data = _.extend(core.is_logged_in(req, true), core.bind_data(flat_data), { 'vendor_services': config.vendor_services});
         res.render('user_profile/user_profile', response_data);

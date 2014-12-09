@@ -8,9 +8,10 @@ function setEvents() {
     //Set html element event handlers
     //$('#fbLink').click(facebookLogin);
     //$('#googleLink').click(googleLogin);
-    $('#btnLocalLoginPhone').click(function(){ return validate_login('#formLoginPhone', true)});
+    $('#btnLocalLoginMobile').click(function(){ return validate_login('#formLoginPhone', true)});
     $('#btnLocalLoginEmail').click(function(){ return validate_login('#formLoginEmail', false)});
-    $('#btnLocalSignUp').click(validate_signup);
+    $('#btnLocalSignUpMobile').click(function(){ return validate_signup('#formSignupMobile', true)});
+    $('#btnLocalSignUpEmail').click(function(){ return validate_signup('#formSignupEmail', false)});
     //$('#btnLogout').click(logout);
     //$('#btnForgotPassword').click(validate_forgot_password);
 }
@@ -34,12 +35,12 @@ function init() {
     };
 }
 
-function validate_login(formId, isPhone){
+function validate_login(formId, isMobile){
     var emailConstraint = { username: commonModule.constraints.email };
     var phoneConstraint = { username: commonModule.constraints.mobile};
     var username = $(formId + ' input[name=username]').val();
 
-    if(isPhone){
+    if(isMobile){
         var uidNotPhone = validate({username: username}, phoneConstraint, {flatten: true});
         if (uidNotPhone) {
             alert('User name should be your 10 digit mobile number');
@@ -64,15 +65,14 @@ function validate_login(formId, isPhone){
     return true;
 }
 
-function validate_signup(){
-    var formId = '#formRegister';
+function validate_signup(formId, isMobile){
     var password = $(formId + ' input[name=password]').val();
     var password2 = $(formId + ' input[name=password2]').val();
     if(password !== password2){
         alert('Both passwords should be the same');
         return false;
     }
-    return validate_login(formId);
+    return validate_login(formId, isMobile);
 }
 
 function validate_forgot_password(){

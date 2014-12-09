@@ -4,6 +4,8 @@ var _ = require('underscore');
 module.exports = {
     is_logged_in   : is_logged_in,
     get_country_code : get_country_code,
+    prefix_country_code : prefix_country_code,
+    remove_country_code : remove_country_code,
     flat_data_to_model:flat_data_to_model,
     model_to_flat_data:model_to_flat_data,
     defaults        : defaults,
@@ -23,6 +25,15 @@ function is_logged_in(req, read_country_code){
 
 function get_country_code(){
     return '+91';
+}
+
+function prefix_country_code(mobile){
+    var country_code = get_country_code();
+    return (mobile.indexOf(country_code)===-1) ? country_code + mobile : mobile;
+}
+
+function remove_country_code(mobile){
+    return mobile ? mobile.replace(get_country_code(), "") : mobile;
 }
 
 //TODO: move this to _ library using mixin ?

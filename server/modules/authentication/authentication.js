@@ -32,7 +32,7 @@ module.exports = {
         });
     },
     page_routes : function (router) {
-
+        //logout
         router.get('/logout', function (req, res) {
             console.log('in logout');
             req.logout();
@@ -41,29 +41,32 @@ module.exports = {
              }*/
             res.redirect('/');
         });
-
-        router.post('/login/email', passport.authenticate('local_login_email', {
-            successRedirect : '/loginSuccess',
-            failureRedirect : '/loginFailure',
-            failureFlash    : true
-        }));
-
+        //login
         router.post('/login/mobile', passport.authenticate('local_login_mobile', {
             successRedirect : '/loginSuccess',
             failureRedirect : '/loginFailure',
             failureFlash    : true
         }));
-
-        router.post('/signup', passport.authenticate('local_signup', {
+        router.post('/login/email', passport.authenticate('local_login_email', {
             successRedirect : '/loginSuccess',
             failureRedirect : '/loginFailure',
             failureFlash    : true
         }));
-
+        //signup
+        router.post('/signup/mobile', passport.authenticate('local_signup', {
+            successRedirect : '/loginSuccess',
+            failureRedirect : '/loginFailure',
+            failureFlash    : true
+        }));
+        router.post('/signup/email', passport.authenticate('local_signup', {
+            successRedirect : '/loginSuccess',
+            failureRedirect : '/loginFailure',
+            failureFlash    : true
+        }));
+        //login/signup success/failure
         router.get('/loginFailure', function (req, res, next) {
             res.redirect("/");
         });
-
         router.get('/loginSuccess', function (req, res, next) {
             console.log('in loginSuccess, user:' + JSON.stringify(req.session.passport.user));
             //req.session.passport.user.oauth_id = req.session.passport.user.username;
@@ -129,8 +132,7 @@ passport.use('local_signup', new LocalStrategy({
 }, callbackLocalSignUp));
 
 function callbackLocalLoginMobile(username, password, done) {
-    username = core.get_country_code() + username;
-    return callbackLocalLogin(username, password, done);
+    return callbackLocalLogin(core.prefix_country_code(username), password, done);
 }
 
 function callbackLocalLogin(username, password, done) {
