@@ -7,18 +7,20 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,//TODO: goo
     core = require(__server_path + '/core');
 
 module.exports = {
-    api_routes  : function (router) {
+    page_routes  : function (router) {
+        //google
         router.get('/auth/google', passport.authenticate('google', {scope : ['https://www.googleapis.com/auth/userinfo.email']}));
         router.get('/auth/google/callback', passport.authenticate('google', {
             successRedirect : '/auth/success',
             failureRedirect : '/auth/failure'
         }));
+        //facebook
         router.get('/auth/facebook', passport.authenticate('facebook'));//TODO: check param display
         router.get('/auth/facebook/callback', passport.authenticate('facebook', {
             successRedirect : '/auth/success',
             failureRedirect : '/auth/failure'
         }));
-
+        //facebook, google login succes/failure
         router.get('/auth/success', function (req, res) {
             console.log('in /auth/success, req.user:' + JSON.stringify(req.user));
             res.render('after_auth/after_auth', {
@@ -29,17 +31,6 @@ module.exports = {
         router.get('/auth/failure', function (req, res) {
             console.log('in /auth/failure');
             res.render('after_auth/after_auth', res, {state : 'failure', user : null});
-        });
-    },
-    page_routes : function (router) {
-        //logout
-        router.get('/logout', function (req, res) {
-            console.log('in logout');
-            req.logout();
-            /*if (req.session.passport && req.session.passport.user) {
-             req.session.passport.user = null;
-             }*/
-            res.redirect('/');
         });
         //login
         router.post('/login/mobile', passport.authenticate('local_login_mobile', {
@@ -71,6 +62,15 @@ module.exports = {
             console.log('in loginSuccess, user:' + JSON.stringify(req.session.passport.user));
             //req.session.passport.user.oauth_id = req.session.passport.user.username;
             res.redirect("/user_profile");
+        });
+        //logout
+        router.get('/logout', function (req, res) {
+            console.log('in logout');
+            req.logout();
+            /*if (req.session.passport && req.session.passport.user) {
+             req.session.passport.user = null;
+             }*/
+            res.redirect('/');
         });
     }
 }
