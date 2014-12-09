@@ -1,5 +1,6 @@
 module.exports = {
-    activate    : activate
+    activate    : activate,
+    read_mock_data : read_mock_data
 };
 
 var file_walker = require('filewalker'),
@@ -63,9 +64,13 @@ function register_page_routes(scanPath, ignore_pages, router){
 }
 
 function render_callback(req, res) {
+    res.render(page_name + '/' + page_name, read_mock_data(req));
+}
+
+function read_mock_data(req){
     var page_name = req.path.replace(/^\//, ''),
         data = read_json_file(path.join(MOCK_DATA_PATH, page_name+'.json'));
-    res.render(page_name + '/' + page_name, data);
+    return data;
 }
 
 //dynamic render call back

@@ -41,10 +41,15 @@
         </div>-->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-                <li id="menuLogin" class="dropdown">
-                    <a id="navLogin" data-toggle="dropdown" href="#" class="dropdown-toggle">Login</a>
-                    {{>login.html}}
-                </li>
+                {{#if is_logged_in}}
+                    <li><a href="/user_profile">User Profile</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                {{else}}
+                    <li id="menuLogin" class="dropdown">
+                        <a id="navLogin" data-toggle="dropdown" href="/login" class="dropdown-toggle">Login</a>
+                        {{>login.html}}
+                    </li>
+                {{/if}}
                 <!--  search bar code -->
                 <!-- <li>
                     <form style="margin-top:4px;margin-bottom:5px;" action="/search" method="GET" class="input-append">

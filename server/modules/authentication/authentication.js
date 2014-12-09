@@ -33,6 +33,7 @@ module.exports = {
     page_routes: function (router) {
 
         router.get('/logout', function (req, res) {
+            console.log('in logout');
             req.logout();
             /*if (req.session.passport && req.session.passport.user) {
                 req.session.passport.user = null;

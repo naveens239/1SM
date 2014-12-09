@@ -2,6 +2,7 @@
 var _ = require('underscore');
 
 module.exports = {
+    is_logged_in   : is_logged_in,
     flat_data_to_model:flat_data_to_model,
     model_to_flat_data:model_to_flat_data,
     defaults        : defaults,
@@ -10,6 +11,10 @@ module.exports = {
     isMobile        : isMobile,
     isValid         : isValid
 };
+
+function is_logged_in(req){
+    return { is_logged_in: !!req.session.passport.user };
+}
 
 //TODO: move this to _ library using mixin ?
 //same as _.defaults with the additional check of hasOwnProperty

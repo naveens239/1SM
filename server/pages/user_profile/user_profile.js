@@ -74,7 +74,9 @@ function user_profile(req, res) {
         if(flat_data.best_way_to_contact){
             flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
         }
-        res.render('user_profile/user_profile', _.extend(core.bind_data(flat_data), {'vendor_services': config.vendor_services}));
+
+        var response_data = _.extend(core.is_logged_in(req), core.bind_data(flat_data), { 'vendor_services': config.vendor_services});
+        res.render('user_profile/user_profile', response_data);
     });
 }
 

@@ -10,7 +10,7 @@ function setEvents() {
     //$('#googleLink').click(googleLogin);
     $('#btnLocalLogin').click(function(){ return validate_login('#formLogin')});
     $('#btnLocalSignUp').click(validate_signup);
-    $('#btnLogout').click(logout);
+    //$('#btnLogout').click(logout);
     //$('#btnForgotPassword').click(validate_forgot_password);
 }
 
@@ -96,6 +96,7 @@ function googleLogin() {
     window.open(url, 'google_login', 'width=' + width + ',height=' + height + ',scrollbars=0,top=' + top + ',left=' + left);
 }
 
+/*
 function logout() {
     window.location = '/logout';
-}
+}*/
