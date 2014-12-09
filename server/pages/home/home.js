@@ -12,6 +12,7 @@ module.exports = {
 }
 
 function home(req, res) {
-    var response_data = _.extend(mockUI.read_mock_data(req), core.is_logged_in(req));
+    console.log('in /home');
+    var response_data = _.extend(mockUI.read_mock_data(req), core.is_logged_in(req, true));
         res.render('home/home', response_data);
 }

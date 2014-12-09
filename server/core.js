@@ -3,6 +3,7 @@ var _ = require('underscore');
 
 module.exports = {
     is_logged_in   : is_logged_in,
+    get_country_code : get_country_code,
     flat_data_to_model:flat_data_to_model,
     model_to_flat_data:model_to_flat_data,
     defaults        : defaults,
@@ -12,8 +13,16 @@ module.exports = {
     isValid         : isValid
 };
 
-function is_logged_in(req){
-    return { is_logged_in: !!req.session.passport.user };
+function is_logged_in(req, read_country_code){
+    var data =  { is_logged_in: !!req.session.passport.user };
+    if(read_country_code){
+        _.extend(data, {country_code: get_country_code() });
+    }
+    return data;
+}
+
+function get_country_code(){
+    return '+91';
 }
 
 //TODO: move this to _ library using mixin ?

@@ -8,7 +8,8 @@ function setEvents() {
     //Set html element event handlers
     //$('#fbLink').click(facebookLogin);
     //$('#googleLink').click(googleLogin);
-    $('#btnLocalLogin').click(function(){ return validate_login('#formLogin')});
+    $('#btnLocalLoginPhone').click(function(){ return validate_login('#formLoginPhone', true)});
+    $('#btnLocalLoginEmail').click(function(){ return validate_login('#formLoginEmail', false)});
     $('#btnLocalSignUp').click(validate_signup);
     //$('#btnLogout').click(logout);
     //$('#btnForgotPassword').click(validate_forgot_password);
@@ -33,16 +34,24 @@ function init() {
     };
 }
 
-function validate_login(formId){
+function validate_login(formId, isPhone){
     var emailConstraint = { username: commonModule.constraints.email };
     var phoneConstraint = { username: commonModule.constraints.mobile};
     var username = $(formId + ' input[name=username]').val();
 
-    var uidNotEmail = validate({username: username}, emailConstraint, {flatten: true});
-    var uidNotPhone = validate({username: username}, phoneConstraint, {flatten: true});
-    if (uidNotEmail && uidNotPhone) {
-        alert('User name should be your email id or 10 digit mobile number');
-        return false;
+    if(isPhone){
+        var uidNotPhone = validate({username: username}, phoneConstraint, {flatten: true});
+        if (uidNotPhone) {
+            alert('User name should be your 10 digit mobile number');
+            return false;
+        }
+    }
+    else {
+        var uidNotEmail = validate({username: username}, emailConstraint, {flatten: true});
+        if (uidNotEmail) {
+            alert('User name should be your email id');
+            return false;
+        }
     }
 
     var pwdConstraint = { password: {presence:true}};

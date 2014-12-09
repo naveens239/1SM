@@ -45,7 +45,7 @@ function setProfileInSession(req) {
 
 function user_profile(req, res) {
     var user = req.session.passport.user;
-
+    console.log('in /user_profile');
     console.log('user:'+JSON.stringify(user));
 
     if (!user || !user.username) {
@@ -63,19 +63,21 @@ function user_profile(req, res) {
         }
 
         var flat_data={};
-        if(!user_profile){
-            user_profile = new user_profile_model();
-            flat_data = { email: user.email, mobile: user.mobile };
+        if(user_profile){
+            core.model_to_flat_data(user_profile, flat_data);
+        }
+        else{
+            var mobile_without_country_code = user.mobile ? user.mobile.replace(core.get_country_code(), "") : "";
+            flat_data = { email: user.email, mobile: mobile_without_country_code };
         }
         console.log('user_profile:'+ user_profile);
-        core.model_to_flat_data(user_profile, flat_data);
 
         //TODO: why is this needed. store as array of strings.
         if(flat_data.best_way_to_contact){
             flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
         }
-
-        var response_data = _.extend(core.is_logged_in(req), core.bind_data(flat_data), { 'vendor_services': config.vendor_services});
+        console.log('response flat_data::'+JSON.stringify(flat_data));
+        var response_data = _.extend(core.is_logged_in(req, true), core.bind_data(flat_data), { 'vendor_services': config.vendor_services});
         res.render('user_profile/user_profile', response_data);
     });
 }
