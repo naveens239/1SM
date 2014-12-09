@@ -6,7 +6,8 @@
 var express = require('express'),
     page_router = express.Router(),
     api_router = express.Router(),
-    path = require('path');
+    path = require('path'),
+    core = require('./core');
 
 //---- Router middleware --------------------
 //TODO: need to track all server calls made by the user and put it in db (may be when exception occurs)
@@ -28,7 +29,7 @@ function post_exception(req, res) {
 
     res.end();//so that callback of the post request in core.js gets called
 }
-var routes_module = require('./modules/routes');
+var routes_module = core.require_module('routes');
 routes_module.set_from_subdirs(path.join(__dirname, 'pages'), page_router, api_router);//load page specific routes
 routes_module.set_from_module(path.join(__dirname, 'modules/authentication/authentication.js'), page_router, api_router);//load authentication routes
 

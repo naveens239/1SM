@@ -1,7 +1,7 @@
 'use strict';
 
 var core = require(__server_path + '/core'),
-    mockUI = require(__server_path + '/modules/mock_ui/mock_ui'),
+    mockUI = core.require_module('mock_ui'),
     _ = require('underscore');
 
 module.exports = {

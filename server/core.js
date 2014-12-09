@@ -1,7 +1,9 @@
 'use strict';
-var _ = require('underscore');
+var _ = require('underscore'),
+    path = require('path');
 
 module.exports = {
+    require_module : require_module,
     is_logged_in   : is_logged_in,
     get_country_code : get_country_code,
     prefix_country_code : prefix_country_code,
@@ -14,6 +16,10 @@ module.exports = {
     isMobile        : isMobile,
     isValid         : isValid
 };
+
+function require_module(module){
+    return require(path.join(__server_path,'modules', module, module));
+}
 
 function is_logged_in(req, read_country_code){
     var data =  { is_logged_in: !!req.session.passport.user };

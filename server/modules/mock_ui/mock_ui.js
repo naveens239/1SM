@@ -5,9 +5,10 @@ module.exports = {
 
 var file_walker = require('filewalker'),
     path = require('path'),
+    core = require(path.join(__server_path,'core')),
     fs = require('fs'),
     _ = require('underscore'),
-    routes_module = require(path.join(__server_path, 'modules/routes')),
+    routes_module = core.require_module('routes'),
     mock_ui_config={},
     MOCK_DATA_PATH = path.join(__dirname, 'mock_data');
 

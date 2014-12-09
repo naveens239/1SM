@@ -5,6 +5,7 @@
 
 var express = require('express'),
     path = require('path'),
+    core = require('./core'),
     hbs = require('hbs'),
     _ = require('underscore');
 
@@ -16,13 +17,13 @@ global.__client_path = path.join(root_path, 'client');
 var app = express();
 
 //load env specific config file
-var config_module = require('./modules/config/config');
+var config_module = core.require_module('config');
 config_module.init(app.get('env'));//initialized only once
 var config = config_module.getConfig();
 console.log('environment:' + config.environment);
 
 //setup fb,google,local authentication with session
-var auth_module = require('./modules/authentication/authentication.js');
+var auth_module = core.require_module('authentication');
 auth_module.init_session(app);
 
 viewConfig();
@@ -33,7 +34,7 @@ errorConfig();
 //loggerConfig();
 
 //load all partials
-var partials_module = require('./modules/partials');
+var partials_module = core.require_module('partials');
 partials_module.registerAll(path.join(__client_path, 'partials'));
 
 startServer();
@@ -83,14 +84,14 @@ function routeConfig() {
 
     //activate mock ui so that mock pages with json data and business logic pages would co exist.
     setTimeout(function () {
-        var mock_ui_module = require('./modules/mock_ui/mock_ui');
+        var mock_ui_module = core.require_module('mock_ui');
         mock_ui_module.activate(router.page_router);
     }, 100);//delay so that all existing routes would be set before mock routes would be added
 
     //list all routes in dev
-    if (app.get('env') === 'development') {
+    if (config.isDevelopment) {
         setTimeout(function () {
-            var routes_module = require('./modules/routes');
+            var routes_module = core.require_module('routes');
             routes_module.show_express_routes(router.page_router.stack, "PAGE ROUTES");
             routes_module.show_express_routes(router.api_router.stack, "API ROUTES");
         }, 500);

@@ -1,9 +1,9 @@
 'use strict';
-var core     = require(__server_path + '/core'),
-    config   = require(__server_path + '/modules/config/config').getConfig(),
-    //util     = require('util'),
-    fs       = require('fs'),
+var core = require(path.join(__server_path,'core')),
+    config   = core.require_module('config').getConfig(),
     path     = require('path'),
+    //util     = require('util'),
+    //fs       = require('fs'),
     //gm       = require('gm'),
     //Busboy   = require('busboy'),
     _        = require('underscore');
