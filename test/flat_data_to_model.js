@@ -1,8 +1,14 @@
-var expect = require('chai').expect,
-    user_profile_model = require('../server/pages/user_profile/models/user_profile'),
-    core = require('../server/core'),
-    _ = require('underscore');
+//set global paths
+var path = require('path');
+var root_path = path.join(__dirname, '..');
+global.__server_path = path.join(root_path, 'server');
+global.__client_path = path.join(root_path, 'client');
 
+
+var expect = require('chai').expect,
+    core = require(__server_path + '/core'),
+    user_profile_model = require(__server_path + '/pages/user_profile/models/user_profile'),
+    _ = require('underscore');
 
 var test_data = {
     "vendor_name"         : "v1",
@@ -29,10 +35,12 @@ var test_data = {
     "account_number"      : "g1"
 };
 
+var profile;
+
 describe("Flat Data to Model Test", function () {
 
     it("should copy to model", function () {
-        var profile = new user_profile_model();
+        profile = new user_profile_model();
 
         core.flat_data_to_model(test_data, profile);
         //console.log(profile);
@@ -44,9 +52,8 @@ describe("Flat Data to Model Test", function () {
 
 describe("Model to Flat Data Test", function () {
     it("should copy from model", function () {
-        var profile = new user_profile_model();
-
-        core.flat_data_to_model(test_data, profile);
+        //profile = new user_profile_model();
+        //core.flat_data_to_model(test_data, profile);
 
         var flat_data = core.model_to_flat_data(profile);
         //console.log('flat_data:'+JSON.stringify(flat_data));
