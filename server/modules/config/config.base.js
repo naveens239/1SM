@@ -20,8 +20,8 @@ module.exports = {
             "callbackURL"   : "http://1stopmake.com/auth/twitter/callback"
         },
         "google"  : {
-            "clientID": "44376929588-eucb7ibmgft6m098t8f5afiajok36edb.apps.googleusercontent.com",
-            "clientSecret"    : "AOrF78uP90X5qDPHvPqBRHfq",
+            "clientID": "499685879937-5qgb8vtkuhurfo42vr20sjff8hne3mon.apps.googleusercontent.com",
+            "clientSecret"    : "mvMh-DSOIRExJLTBktyk9VuG",
             "callbackURL"   : "http://1stopmake.com/auth/google/callback"
         }
     }
