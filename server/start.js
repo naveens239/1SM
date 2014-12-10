@@ -9,11 +9,7 @@ var express = require('express'),
     hbs = require('hbs'),
     _ = require('underscore');
 
-//set global paths
-var root_path = path.join(__dirname, '..');
-global.__server_path = path.join(root_path, 'server');
-global.__client_path = path.join(root_path, 'client');
-
+core.set_globals();
 var app = express();
 
 //load env specific config file

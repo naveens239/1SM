@@ -1,13 +1,9 @@
 //set global paths
-var path = require('path');
-var root_path = path.join(__dirname, '..');
-global.__server_path = path.join(root_path, 'server');
-global.__client_path = path.join(root_path, 'client');
-
+var core = require('../server/core');
+core.set_globals();
 
 var expect = require('chai').expect,
-    core = require(__server_path + '/core'),
-    user_profile_model = require(__server_path + '/pages/user_profile/models/user_profile'),
+    user_profile_model = core.require_model('user_profile'),
     _ = require('underscore');
 
 var test_data = {

@@ -4,7 +4,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy,//TODO: goo
     passport = require('passport'),
     core = require(__server_path + '/core'),
     config = core.require_module('config').getConfig(),
-    UserModel = require('./models/user');
+    UserModel = core.require_model('user');
 
 module.exports = {
     init_session: init_session,

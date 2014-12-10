@@ -3,7 +3,9 @@ var _ = require('underscore'),
     path = require('path');
 
 module.exports = {
+    set_globals        : set_globals,
     require_module     : require_module,
+    require_model      : require_model,
     is_logged_in       : is_logged_in,
     get_country_code   : get_country_code,
     prefix_country_code: prefix_country_code,
@@ -17,8 +19,18 @@ module.exports = {
     isValid            : isValid
 };
 
+function set_globals(){
+    var root_path = path.join(__dirname, '..');
+    global.__server_path = path.join(root_path, 'server');
+    global.__client_path = path.join(root_path, 'client');
+}
+
 function require_module(module) {
     return require(path.join(__server_path, 'modules', module, module));
+}
+
+function require_model(model) {
+    return require(path.join(__server_path, 'models', model));
 }
 
 function is_logged_in(req, read_country_code) {

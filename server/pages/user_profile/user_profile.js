@@ -2,6 +2,7 @@
 var path     = require('path'),
     core = require(path.join(__server_path,'core')),
     config   = core.require_module('config').getConfig(),
+    user_profile_model = core.require_model('user_profile'),
 
     //util     = require('util'),
     //fs       = require('fs'),
@@ -54,8 +55,6 @@ function user_profile(req, res) {
         return;
     }
 
-    var user_profile_model = require('./models/user_profile');
-
     user_profile_model.findOne({username:user.username}, function (err, user_profile) {
         if(err) {
             console.log(err);
@@ -92,8 +91,7 @@ function save_in_session(req, res) {
 }
 
 function user_profile_save(req, res) {
-    var username = req.session.passport.user.username,
-        user_profile_model = require('./models/user_profile');
+    var username = req.session.passport.user.username;
 
     user_profile_model.findOne({username:username}, function (err, user_profile) {
         if(err) {
