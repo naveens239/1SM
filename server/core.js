@@ -3,42 +3,42 @@ var _ = require('underscore'),
     path = require('path');
 
 module.exports = {
-    require_module : require_module,
-    is_logged_in   : is_logged_in,
-    get_country_code : get_country_code,
-    prefix_country_code : prefix_country_code,
-    remove_country_code : remove_country_code,
-    flat_data_to_model:flat_data_to_model,
-    model_to_flat_data:model_to_flat_data,
-    defaults        : defaults,
-    bind_data       : bind_data,
-    isEmail         : isEmail,
-    isMobile        : isMobile,
-    isValid         : isValid
+    require_module     : require_module,
+    is_logged_in       : is_logged_in,
+    get_country_code   : get_country_code,
+    prefix_country_code: prefix_country_code,
+    remove_country_code: remove_country_code,
+    flat_data_to_model : flat_data_to_model,
+    model_to_flat_data : model_to_flat_data,
+    defaults           : defaults,
+    bind_data          : bind_data,
+    isEmail            : isEmail,
+    isMobile           : isMobile,
+    isValid            : isValid
 };
 
-function require_module(module){
-    return require(path.join(__server_path,'modules', module, module));
+function require_module(module) {
+    return require(path.join(__server_path, 'modules', module, module));
 }
 
-function is_logged_in(req, read_country_code){
-    var data =  { is_logged_in: !!req.session.passport.user };
-    if(read_country_code){
-        _.extend(data, {country_code: get_country_code() });
+function is_logged_in(req, read_country_code) {
+    var data = {is_logged_in: !!req.session.passport.user};
+    if (read_country_code) {
+        _.extend(data, {country_code: get_country_code()});
     }
     return data;
 }
 
-function get_country_code(){
+function get_country_code() {
     return '+91';
 }
 
-function prefix_country_code(mobile){
+function prefix_country_code(mobile) {
     var country_code = get_country_code();
-    return (mobile.indexOf(country_code)===-1) ? country_code + mobile : mobile;
+    return (mobile.indexOf(country_code) === -1) ? country_code + mobile : mobile;
 }
 
-function remove_country_code(mobile){
+function remove_country_code(mobile) {
     return mobile ? mobile.replace(get_country_code(), "") : mobile;
 }
 
@@ -57,13 +57,13 @@ function defaults(obj) {
     return obj;
 }
 
-function model_to_flat_data(model, flat_data){
+function model_to_flat_data(model, flat_data) {
     var keys = _.without(_.keys(model.schema.paths), '_id', '__v'),
         data_key, model_pointer;
 
-    if(!flat_data) flat_data = {};
+    if (!flat_data) flat_data = {};
 
-    _.each(keys, function(key){
+    _.each(keys, function (key) {
         model_pointer = traverse_upto_last(model, key);
         data_key = key.split(".").pop();//last element
         flat_data[data_key] = model_pointer[data_key];
@@ -73,25 +73,25 @@ function model_to_flat_data(model, flat_data){
 }
 
 //copies flat data to anywhere in the model where the key matches
-function flat_data_to_model(flat_data, model){
+function flat_data_to_model(flat_data, model) {
     var keys = _.without(_.keys(model.schema.paths), '_id', '__v'),
         data_key, model_pointer;
 
-    _.each(keys, function(key){
+    _.each(keys, function (key) {
         model_pointer = traverse_upto_last(model, key);
         data_key = key.split(".").pop();//last element
 
-        if(flat_data[data_key]){
+        if (flat_data[data_key]) {
             model_pointer[data_key] = flat_data[data_key];
         }
     });
 }
 
-function traverse_upto_last(model, model_key){
+function traverse_upto_last(model, model_key) {
     var new_obj = model,
         keyArray = model_key.split(".");
 
-    while(keyArray.length>1){
+    while (keyArray.length > 1) {
         model_key = keyArray.shift();//first element
         new_obj = new_obj[model_key];
     }
@@ -101,18 +101,18 @@ function traverse_upto_last(model, model_key){
 function bind_data(json) {
     var bindScript = '<script src="js/common.js"></script>' +
         '<script>$(function () { commonModule.bind_data(' + JSON.stringify(json) + '); });</script>';
-    return {bind_data : bindScript};
+    return {bind_data: bindScript};
 }
 
 //TODO: need to modularize validator and move isEmail, isMobile and isValid to client's common.js so that both client and server can reuse the code
 function isEmail(obj) {
     var commonModule = require(__client_path + '/js/common.js');
-    return isValid(obj, {email : commonModule.constraints.email});
+    return isValid(obj, {email: commonModule.constraints.email});
 }
 
 function isMobile(obj) {
     var commonModule = require(__client_path + '/js/common.js');
-    return isValid(obj, {mobile : commonModule.constraints.mobile});
+    return isValid(obj, {mobile: commonModule.constraints.mobile});
 }
 
 function isValid(obj, constraint) {

@@ -21,11 +21,11 @@ function activate(router){
 
     //ignore 'GET' routes so that mock routes wont overwrite them
     var ignore_pages={}, json_val;
-    console.log('existing gets::')
+    //console.log('existing gets::')
     _.each(existing_routes, function(json){
         json_val = json['get'];
         if(json_val){
-            console.log(json_val);
+            //console.log(json_val);
             ignore_pages[json_val.replace('/','')] = true;
         }
     });
