@@ -22,7 +22,7 @@ module.exports = {
         "google"  : {
             "clientID": "499685879937-5qgb8vtkuhurfo42vr20sjff8hne3mon.apps.googleusercontent.com",
             "clientSecret"    : "mvMh-DSOIRExJLTBktyk9VuG",
-            "callbackURL"   : "http://1stopmake.com/auth/google/callback"
+            "callbackURL"   : "http://1stopmake.com/oauth2callback"
         }
     }
 }
