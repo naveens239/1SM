@@ -1,8 +1,10 @@
 'use strict';
 var _ = require('underscore'),
-    path = require('path');
+    path = require('path'),
+    fs = require('fs');
 
 module.exports = {
+    render_page        : render_page,
     set_globals        : set_globals,
     require_module     : require_module,
     require_model      : require_model,
@@ -19,7 +21,43 @@ module.exports = {
     isValid            : isValid
 };
 
-function set_globals(){
+function render_page(req, res, before_model_fetch, after_model_fetch) {
+    console.log('in core.render_page:' + req.path);
+
+    if (before_model_fetch) {
+        var result = before_model_fetch(req, res);
+        if (!result) return;
+    }
+
+    var page_name = req.path.replace(/^\//, ''),
+        model = require_model(page_name, true),
+        flat_data = {};
+
+    if (model) {
+        model.findOne(result.fetch_query, function (err, result_model) {
+            if (err) {
+                console.log('error fetching data:'+err);
+                return;
+            }
+            console.log('result_model:'+result_model);
+            if (result_model) {
+                model_to_flat_data(result_model, flat_data);
+            }
+
+            if (after_model_fetch) {
+                flat_data = after_model_fetch(result_model, flat_data, req, res);
+            }
+            console.log('flat_data ::' + JSON.stringify(flat_data));
+
+            var response_data = _.extend(is_logged_in(req, true), bind_data(flat_data));
+            res.render(page_name + '/' + page_name, response_data);
+        });
+    } else {
+        res.render(page_name + '/' + page_name);
+    }
+}
+
+function set_globals() {
     var root_path = path.join(__dirname, '..');
     global.__server_path = path.join(root_path, 'server');
     global.__client_path = path.join(root_path, 'client');
@@ -29,8 +67,17 @@ function require_module(module) {
     return require(path.join(__server_path, 'modules', module, module));
 }
 
-function require_model(model) {
-    return require(path.join(__server_path, 'models', model));
+function require_model(model_name, check_if_exists) {
+    var model_path = path.join(__server_path, 'models', model_name);
+    if (check_if_exists) {
+        if (fs.existsSync(model_path + '.js')) {
+            return require(model_path);
+        }
+        return null;
+    }
+    else {
+        return require(model_path);
+    }
 }
 
 function is_logged_in(req, read_country_code) {

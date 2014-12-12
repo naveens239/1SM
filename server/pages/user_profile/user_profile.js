@@ -12,13 +12,42 @@ var path     = require('path'),
 
 module.exports = {
     page_routes: function (router) {
-        router.get('/user_profile', user_profile);
+        router.get('/user_profile', function(req, res){core.render_page(req, res, before_model_fetch, after_model_fetch);});
         router.post('/user_profile_save', user_profile_save);
         router.post('/save_in_session', save_in_session);
         //router.post("/upload", upload);
         //router.get('/gallery', gallery);
     }
 };
+
+function before_model_fetch(req, res){
+    var user = req.session.passport.user;
+    console.log('user:'+JSON.stringify(user));
+
+    if (!user || !user.username) {
+        console.log("Error finding username");
+        res.redirect("/");
+        return false;
+    }
+
+    return {fetch_query:{username:user.username}};
+}
+
+function after_model_fetch(result_model, flat_data, req, res){
+    var user = req.session.passport.user;
+    if(!result_model){
+        flat_data = { email: user.email, mobile: user.mobile };
+    }
+
+    //massage data before displaying
+    flat_data.mobile = core.remove_country_code(flat_data.mobile);
+    if(flat_data.best_way_to_contact){
+        //TODO: why is this needed. cant we store as array of strings?
+        flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
+    }
+
+    return flat_data;
+}
 
 function setProfileInSession(req) {
     var profile = req.session.passport.user.user_profile ? req.session.passport.user.user_profile : {};
@@ -41,45 +70,9 @@ function setProfileInSession(req) {
     return profile;
 }
 
-function user_profile(req, res) {
-    var user = req.session.passport.user;
-    console.log('in /user_profile');
-    console.log('user:'+JSON.stringify(user));
-
-    if (!user || !user.username) {
-        console.log("Error finding username");
-        res.redirect("/");
-        return;
-    }
-
-    user_profile_model.findOne({username:user.username}, function (err, user_profile) {
-        if(err) {
-            console.log(err);
-            return;
-        }
-
-        var flat_data={};
-        if(user_profile){
-            core.model_to_flat_data(user_profile, flat_data);
-        }
-        else{
-            flat_data = { email: user.email, mobile: user.mobile };
-        }
-        //massage data before displaying
-        flat_data.mobile = core.remove_country_code(flat_data.mobile);
-        if(flat_data.best_way_to_contact){//TODO: why is this needed. store as array of strings.
-            flat_data.best_way_to_contact = flat_data.best_way_to_contact.split(',');
-        }
-
-        console.log('response flat_data::'+JSON.stringify(flat_data));
-        var response_data = _.extend(core.is_logged_in(req, true), core.bind_data(flat_data), { 'vendor_services': config.vendor_services});
-        res.render('user_profile/user_profile', response_data);
-    });
-}
-
 //Test code to skip mandatory login check
-/*function user_profile(req, res) {
- res.render('user_profile/user_profile', {});
+/*function before_model_fetch(req, res){
+ res.render('user_profile/user_profile');
  }*/
 
 function save_in_session(req, res) {
