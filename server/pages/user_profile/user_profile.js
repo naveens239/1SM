@@ -14,9 +14,6 @@ module.exports = {
     page_routes: function (router) {
         router.get('/user_profile', user_profile);
         router.post('/user_profile_save', user_profile_save);
-    },
-
-    api_routes: function (router) {
         router.post('/save_in_session', save_in_session);
         //router.post("/upload", upload);
         //router.get('/gallery', gallery);

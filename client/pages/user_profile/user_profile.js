@@ -53,7 +53,7 @@ function setEvents() {
             var lastFormsData = validateModule.showValidateErrors("#" + formId);
             if (lastFormsData) {
                 //validation success; save form data in session
-                $.post("api/save_in_session", lastFormsData);
+                $.post("save_in_session", lastFormsData);
             }
             else{
                 //validation failed, don't switch tab
