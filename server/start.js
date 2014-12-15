@@ -23,7 +23,7 @@ var auth_module = core.require_module('authentication');
 auth_module.init_session(app);
 
 viewConfig();
-databaseConfig();
+core.databaseConfig(config.dbconfig);
 internationalizationConfig();
 routeConfig();
 errorConfig();
@@ -53,15 +53,6 @@ function viewConfig() {
     app.use(bodyParser.json());
 
     app.use(express.static(__client_path));//Anything under client will not go through routing
-}
-
-function databaseConfig() {
-    var mongoose = require('mongoose');
-    mongoose.connect('mongodb://' + config.dbconfig.dburl);
-    mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
-    mongoose.connection.once('open', function callback() {
-        console.log('Mongoose connected to DB');
-    });
 }
 
 function internationalizationConfig() {

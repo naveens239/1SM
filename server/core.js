@@ -4,6 +4,7 @@ var _ = require('underscore'),
     fs = require('fs');
 
 module.exports = {
+    databaseConfig     : databaseConfig,
     render_page        : render_page,
     set_globals        : set_globals,
     require_module     : require_module,
@@ -20,6 +21,15 @@ module.exports = {
     isMobile           : isMobile,
     isValid            : isValid
 };
+
+function databaseConfig(dbconfig) {
+    var mongoose = require('mongoose');
+    mongoose.connect('mongodb://' + dbconfig.dburl);
+    mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+    mongoose.connection.once('open', function callback() {
+        console.log('Mongoose connected to DB');
+    });
+}
 
 function render_page(req, res, before_model_fetch, after_model_fetch) {
     console.log('in core.render_page:' + req.path);
