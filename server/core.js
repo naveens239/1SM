@@ -29,6 +29,7 @@ function databaseConfig(dbconfig) {
     mongoose.connection.once('open', function callback() {
         console.log('Mongoose connected to DB');
     });
+    return mongoose;
 }
 
 function render_page(req, res, before_model_fetch, after_model_fetch) {
