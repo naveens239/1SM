@@ -1,5 +1,6 @@
 'use strict';
 var _ = require('underscore'),
+    caller = require('caller'),
     path = require('path'),
     fs = require('fs');
 
@@ -9,6 +10,7 @@ module.exports = {
     set_globals        : set_globals,
     require_module     : require_module,
     require_model      : require_model,
+    require_plugin     : require_plugin,
     is_logged_in       : is_logged_in,
     get_country_code   : get_country_code,
     prefix_country_code: prefix_country_code,
@@ -89,6 +91,11 @@ function require_model(model_name, check_if_exists) {
     else {
         return require(model_path);
     }
+}
+
+function require_plugin(plugin, module){
+    var module_path = module ? path.join(__server_path, 'modules', module) : path.dirname(caller());
+    return require(path.join(module_path, 'plugins', plugin));
 }
 
 function is_logged_in(req, read_country_code) {

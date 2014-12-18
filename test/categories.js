@@ -25,7 +25,9 @@ var test_data = [
                                 children:[
                                     { text: 'Mobile', children:[
                                         { text: 'Samsung', children:[
-                                            { text: 'Galaxy S6'}
+                                            { text: 'Galaxy S6',
+                                                id: 'galaxy_s6_id'
+                                            }
                                         ]}
                                     ]}
                                 ]
