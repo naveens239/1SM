@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var categories_schema = new mongoose.Schema(
     {
+        id   : String,
         text : String,
         price: Number,
         notes: String,
