@@ -1,12 +1,13 @@
 'use strict';
-var commonModule = (function () {
+var modules = modules || {};
+modules.common = (function () {
     return {
         string_to_array: string_to_array,
         form_to_object : form_to_object,
         bind_data      : bind_data,
         constraints    : {
-            email: { email: true },
-            mobile: { format: { pattern: /^\d{10}$/ } }
+            email : {email: true},
+            mobile: {format: {pattern: /^\d{10}$/}}
         }
     };
     /**
@@ -97,5 +98,5 @@ var commonModule = (function () {
 })();
 
 if ((typeof module) !== 'undefined') {
-    module.exports = commonModule;
+    module.exports = modules.common;
 }

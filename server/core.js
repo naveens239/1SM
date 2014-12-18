@@ -169,19 +169,19 @@ function traverse_upto_last(model, model_key) {
 }
 
 function bind_data(json) {
-    var bindScript = '<script src="js/common.js"></script>' +
-        '<script>$(function () { commonModule.bind_data(' + JSON.stringify(json) + '); });</script>';
+    var bindScript = '<script src="/modules/common.js"></script>' +
+        '<script>$(function () { modules.common.bind_data(' + JSON.stringify(json) + '); });</script>';
     return {bind_data: bindScript};
 }
 
 //TODO: need to modularize validator and move isEmail, isMobile and isValid to client's common.js so that both client and server can reuse the code
 function isEmail(obj) {
-    var commonModule = require(__client_path + '/js/common.js');
+    var commonModule = require(__client_path + '/modules/common.js');
     return isValid(obj, {email: commonModule.constraints.email});
 }
 
 function isMobile(obj) {
-    var commonModule = require(__client_path + '/js/common.js');
+    var commonModule = require(__client_path + '/modules/common.js');
     return isValid(obj, {mobile: commonModule.constraints.mobile});
 }
 

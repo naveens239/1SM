@@ -36,8 +36,8 @@ function setEvents() {
 }*/
 
 function validate_login(formId, isMobile){
-    var emailConstraint = { username: commonModule.constraints.email };
-    var phoneConstraint = { username: commonModule.constraints.mobile};
+    var emailConstraint = { username: modules.common.constraints.email };
+    var phoneConstraint = { username: modules.common.constraints.mobile};
     var username = $(formId + ' input[name=username]').val();
 
     if(isMobile){
@@ -77,7 +77,7 @@ function validate_signup(formId, isMobile){
 
 function validate_forgot_password(){
     /*var username = $('#formForgotPassword input[name=username]').val();
-    var emailConstraint = { username: commonModule.constraints.email };
+    var emailConstraint = { username: modules.common.constraints.email };
 
     var uidNotEmail = validate({username: username}, emailConstraint, {flatten: true});
     if (uidNotEmail) {

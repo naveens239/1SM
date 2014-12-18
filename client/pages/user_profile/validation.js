@@ -24,7 +24,7 @@ var validateModule = (function () {
 
     function doValidate(formSelector, formData) {
         if (!formData) {
-            formData = commonModule.form_to_object(formSelector);
+            formData = modules.common.form_to_object(formSelector);
         }
 
         var errors = validate(formData, constraints[formSelector]);//TODO: calls global validate method. need to make module
@@ -56,7 +56,7 @@ var validateModule = (function () {
      * Shows validation errors. returns false if there are errors. returns the formData if there are no errors.
      */
     function showValidateErrors(formSelector, formData){
-        if(!formData) formData = commonModule.form_to_object(formSelector);
+        if(!formData) formData = modules.common.form_to_object(formSelector);
         var errors = doValidate(formSelector, formData);
         if (errors) {
             alert(errors.join('\n'));
