@@ -21,4 +21,7 @@ function fetch_categories(elementId) {
         "plugins" : [ "checkbox", "state", "wholerow" ]
     });
 
+    $(elementId).on("changed.jstree", function (e, data) {
+        console.log('selected data:'+data.selected);
+    });
 }
