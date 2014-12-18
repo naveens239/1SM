@@ -12,6 +12,10 @@ function fetch_categories(elementId) {
         "core" : {
             'data' : {
                 'url' : 'api/categories'
+            },
+            'themes': {
+                'name': 'proton',
+                'responsive': true
             }
         },
         "plugins" : [ "checkbox", "state", "wholerow" ]

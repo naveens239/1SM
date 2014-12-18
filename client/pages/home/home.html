@@ -18,7 +18,8 @@ background:#FF0000;
 
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/1stopmake.css" />
-    <link rel="stylesheet" href="modules/jstree/themes/default/style.min.css" />
+    <!--<link rel="stylesheet" href="/modules/jstree/themes/default/style.min.css" />-->
+    <link rel="stylesheet" href="/modules/jstree/themes/proton/style.min.css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +31,6 @@ background:#FF0000;
     <script type="text/javascript" src="/js/libs/jsc3d.js"></script>
     <script type="text/javascript" src="/js/libs/jsc3d.touch.js"></script>
     <!-- End 3D viewer-->
-
   </head>
   <body>
 
@@ -52,7 +52,10 @@ background:#FF0000;
   <div class="col-md-12"><h2 style="text-align:center">3D Printing Service and Marketplace</h2></div>
 </div>
 <div class="row" style="margin-top:20px">
+    <form action="/homesubmit" method="post">
   <div class="col-md-3" id="filterId">
+
+
  <!--
   <ul class="nav nav-pills nav-stacked">
    <li role="presentation" class="active"><a href="#">Home</a></li>
@@ -61,10 +64,22 @@ background:#FF0000;
 </ul>   -->
   
   </div>
+        <script>
+            function form_submit(){
+                var arr = $('#filterId').jstree('get_selected');
+                //alert(arr.join(',\n'));
+                $('#checked_categories').val(arr);
+                return true;
+            }
+        </script>
+        <input type="hidden" id="checked_categories" name="checked_categories"  value=""/>
+        <!--<input type="submit" onclick="return form_submit();"/>-->
+    </form>
 
   {{>featured_models.html}}
 
 </div>
+
 </div>
 
 
@@ -156,6 +171,8 @@ background:#FF0000;
     <!--load categories tree-->
   <script src="/modules/jstree/jstree.min.js"></script>
   <script src="/modules/jstree/1SM_jstree.js"></script>
-  <script>modules.jstree.fetch_categories('#filterId');</script>
+  <script>
+      modules.jstree.fetch_categories('#filterId');
+  </script>
   </body>
 </html>
