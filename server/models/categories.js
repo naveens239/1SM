@@ -5,7 +5,8 @@ var categories_schema = new mongoose.Schema(
         price: Number,
         notes: String,
         state: {
-            selected: Boolean
+            selected: Boolean,
+            opened: Boolean
         }
     });
 //Note: adding separately for recursive schema definition to work

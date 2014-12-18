@@ -8,29 +8,38 @@ var expect = require('chai').expect,
 
 config_module.init('development');//initialized only once
 var config = config_module.getConfig();
+core.databaseConfig(config.dbconfig);
 
 var test_data = [
     {
-        text: 'Featured 3d models',
-        notes       : 'Featured 3d models',
-        state : {
-            selected : true
-        },
+        text: 'Additive manufacturing',
         children    : [
-            { text: 'Art'},
-            { text: 'Accessories', children:[
-                { text: 'Cases'},{ text: 'Key chains'}
-            ]},
-            { text: 'Gadgets'}
+            {
+                text: 'Featured 3d models',
+                children    : [
+                    { text: 'Art'},
+                    { text: 'Accessories',
+                        children:[
+                            {
+                                text: 'Cases',
+                                children:[
+                                    { text: 'Mobile', children:[
+                                        { text: 'Samsung', children:[
+                                            { text: 'Galaxy S6'}
+                                        ]}
+                                    ]}
+                                ]
+                            },{ text: 'Key chains'}]},
+                    { text: 'Gadgets'}
+                ]
+            },
+            {
+                text: 'Featured 3d vendors',
+                notes       : 'Featured 3d vendors'
+            }
         ]
-    },
-    {
-        text: 'Featured 3d vendors',
-        notes       : 'Featured 3d vendors'
     }
 ];
-
-core.databaseConfig(config.dbconfig);
 
 var category;
 
@@ -44,7 +53,6 @@ describe("Model::categories", function () {
     });
 
     it("insert test data", function (done) {
-
         _.each(test_data, function(obj){
             category = new categories_model(obj);
             category.save(function(err, doc){

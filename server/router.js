@@ -31,10 +31,10 @@ function post_exception(req, res) {
 }
 var routes_module = core.require_module('routes');
 routes_module.set_from_subdirs(path.join(__dirname, 'pages'), page_router, api_router);//load page specific routes
-routes_module.set_from_module(path.join(__dirname, 'modules/authentication/authentication.js'), page_router, api_router);//load authentication routes
-
+routes_module.set_from_subdirs(path.join(__dirname, 'modules'), page_router, api_router);//load module specific routes
+//routes_module.set_from_module(path.join(__dirname, 'modules/authentication/authentication.js'), page_router, api_router);//load authentication routes
 
 module.exports = {
     page_router: page_router,
     api_router: api_router
-}
+};
