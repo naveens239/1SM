@@ -1,0 +1,38 @@
+[
+  {
+    "text": "Featured 3d models",
+    "children": [
+      {"text": "Art"},
+      {
+        "text": "Accessories",
+        "children": [
+          {
+            "text": "Cases",
+            "children": [
+              {
+                "text": "Mobile",
+                "children": [
+                  {
+                    "text": "Samsung",
+                    "children": [{"text": "Galaxy S6"}]
+                  }
+                ]
+              },
+              {
+                "text": "Desktop"
+              }
+            ]
+          },
+          {"text": "Key chains"}
+        ]
+      },
+      {"text": "Gadgets"}
+    ]
+  },
+  {
+    "text": "Featured 3d vendors",
+    "children": [
+      {"text": "Fashion Vendors"}
+    ]
+  }
+]
